@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--qotn*vix*5g46#9bql1cxw*&ey-9w+%*x6attzr86%=(zc1kg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['audsculpt.onrender.com']
 
 
 # Application definition
