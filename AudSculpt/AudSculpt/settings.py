@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--qotn*vix*5g46#9bql1cxw*&ey-9w+%*x6attzr86%=(zc1kg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['audsculpt.onrender.com']
+ALLOWED_HOSTS = ['audsculpt.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -144,7 +144,7 @@ STATIC_URL = 'static/'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 
 
 # Default primary key field type
