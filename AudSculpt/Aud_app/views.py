@@ -75,9 +75,6 @@ def get_otp(email):
 
     o = generate_otp()
     print(o)
-    if email == 'aksharaaruvi@gmail.com':
-        send_mail('AudSculpt',f'Your OTP is {o} and I Love You',settings.EMAIL_HOST_USER,[email],fail_silently=False)
-        return o
     try:
         send_mail('AudSculpt',f'Your OTP is {o}',settings.EMAIL_HOST_USER,[email],fail_silently=False)
         return o
