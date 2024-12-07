@@ -1,5 +1,4 @@
 Audenv/
-AudSculpt/migrations
 tailwind_audsculpt/static_src/node_modules
 # Created by https://www.gitignore.io
 
@@ -89,4 +88,3 @@ __pycache__/
 local_settings.py
 
 .env
-db.sqlite3
