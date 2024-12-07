@@ -1,0 +1,104 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0e1233;
+        }
+
+        .form-container {
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-column {
+            padding: 10px;
+        }
+
+        .form-column label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-column input {
+            width: 100%;
+            background-color:#15193D;
+            color:#fff;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-column button {
+            background-color: #007bbf;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+{% tailwind_css %}
+
+<body>
+    <form method = "POST">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-column">
+                <label for="houseno">House No:</label>
+                <input type="text" value="{{address.houseno}}" id="houseno" name="houseno">
+    
+                <label for="street">Street:</label>
+                <input type="text" value="{{address.street}}" id="street" name="street">
+    
+                <label for="city">City:</label>
+                <input type="text" value="{{address.city}}" id="city" name="city">
+    
+                <label for="landmark">Landmark:</label>
+                <input type="text" value="{{address.landmark}}" id="landmark" name="landmark">
+    
+                <label for="pincode">Pincode:</label>
+                <input type="text" value="{{address.pincode}}" max="6" min="6" id="pincode" name="pincode">
+                {% if err %}
+                    <p class="text-red-500 font-bold text-sm">{{err}}</p>
+                {% endif %}
+
+                <div class="flex justify-between items-center">
+                    <div>
+                        <button type="submit">Save/Edit</button>
+                    </div>
+                    <div>
+                        <a href="{% url 'del_address' pk=address.id %}"><img class="bg-black" src="/static/images/delete.png" alt=""></a>
+    
+                    </div>
+                </div>
+
+
+                
+
+            </div>
+        </div>
+    </form>
+    
+    
+
+</body>
+</html>

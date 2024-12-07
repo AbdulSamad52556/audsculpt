@@ -1,0 +1,100 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    
+    
+</head>
+<style>  
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        body{
+            background-color: #0e1233;           
+            
+        }
+        
+       
+        .login-form{
+            background-color: #ffffff;
+            border-radius: 22px;
+        }
+       
+          
+        .form input{
+            border-radius: 12px;
+            color: #0e1233;
+            border: none;
+        }
+        
+      
+        .form button{
+            background-color: #0e1233;
+            color: #ffffff;
+            border-radius: 12px;
+            border: none;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .login-form input{
+            background-color: rgba(0, 0, 0, 0.158);
+        }
+        
+        
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        
+    </style>
+
+{% tailwind_css %}
+
+<body>
+
+    <div class="">
+        <div class="grid-cols-2 lg:flex justify-around p-20 gap-20">
+            <div class="lg:w-2/4" style="background-color: #15193d;color: #ffffff34;border-radius: 22px;">
+                <div class="flex flex-col  p-10 justify-center items-center ">
+                    <h1 class="text-5xl">Welcome Back.....</h1>
+                    <h3 class="text-xl">Explore and just get your Gear.</h3>
+                </div>
+            </div>
+            <div class="login-form mt-10 lg:m-0 lg:w-2/4">
+                <div class="form flex flex-col w-full">
+                    <form method="POST" class="flex flex-col p-10 gap-10 justify-center items-center">
+                    {% csrf_token%}
+                        
+                        <input class="w-3/4 h-14" type="text" placeholder="Username" name='email' required>
+                        <input class='w-3/4 h-14' type="password" placeholder="password" name='password' required>
+                        {% if email_err %}
+                        <p class="text-center text-red-500">{{email_err}}</p>
+                        {% endif %}
+                        {% if user_err %}
+                            <p class="text-center text-red-500">{{user_err}}</p>
+                        {% endif %}
+                        <button type='submit' class='w-3/4 h-14'>Login</button>
+                        <a href="/otp_sending"><p>forgot password</p></a>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p>don't have an account <a href="/signup">Create</a></p>
+                        
+                    </div>
+                  
+                    
+                </div>
+                                
+            </div>
+        </div>
+    </div>
+  
+</body>
+</html>

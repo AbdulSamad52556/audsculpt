@@ -1,0 +1,222 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+		
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+        body {
+            background-color: #0e1233;
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navi {
+            width: 20%;
+            background-color: #ffffff;
+            min-height: 150vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        
+
+        hr {
+            margin-top: -40%;
+            width: 90%;
+        }
+        
+        a{
+            font-size: 100%;
+            text-decoration: none;
+            color: black;
+
+        }
+        .na{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height:45px;
+           border-radius: 32px;
+           margin-top: 13%;
+           margin-left: 10%;
+           width: 80%;
+           
+        }
+        .na#three {
+            background-color: #0e1233;
+            color: #ffffff;
+            
+        }
+        .na#three a{
+            background-color: #0e1233;
+            color: #ffffff;
+        }
+        .heading{
+            color: #ffffff;
+            margin-left: 20%;
+        }
+        input::placeholder{
+            text-align: center;
+            color: #ffffff21;
+        }
+        .btn:hover{
+            cursor: pointer;
+        }
+        
+        
+        
+        
+        .title2{
+            margin-left: 10%;
+            margin-top: 2%;
+            width: 65vw;
+            background-color: #15193D;
+            height: 10vh;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+        
+       
+       
+    </style>
+{% tailwind_css %}
+</head>
+
+
+<body>
+    
+    
+
+    
+
+    <div class="flex">
+         <div class="navi">
+
+            <i><img class="logo w-full" src="/static/images/IMG_20231115_005000.png" alt=""></i>
+            <hr>
+            <div class="">
+
+                <div class="na" id='one'>
+                    <div>
+                        <img src="/static/images/home.png" class="w-6 lg:w-8 lg:w-10 mr-4 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_home"><b >Dashboard</b></a>
+                </div>
+
+                
+                <div class="na" id='three'>
+                    <div>
+                        <img src="/static/images/products.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_products"><b>Products</b></a>
+                </div>
+                <div class="na" id="four">
+                    <div>
+                        <img src="/static/images/users.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_users" ><b>Users</b></a>
+                </div>
+                <div class="na" id="five">
+                    <div>
+                        <img src="/static/images/orders.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_orders"><b>Orders</b></a>
+                </div>
+                <div class="na" id="six">
+                    <div>
+                        <img src="/static/images/category.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_category"><b>Category</b></a>
+                </div>
+                <div class="na" id="seven">
+                    <div>
+                        <img src="/static/images/coupons.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_coupons"><b>Coupons</b></a>
+                </div>
+                <div class="na" id="eight">
+                    <div>
+                        <img src="/static/images/discount.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_offers"><b>Offers</b></a>
+                </div>
+            
+            </div>
+            
+        </div>
+
+        <div style="width: 100%;">
+            
+            <div>
+                <div>
+                    <h1 style="font-size: 40px;margin-top:5%; margin-left:5%;"><i class="text-white">Products</i></h1> 
+                </div>
+                    <div style="">
+                        <h1 style="font-size:40px;" class="text-center text-sm text-white sm:text-lg md:text-xl" ><b>Select Category</b></h1>
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="flex justify-center">
+                                <div>
+                                    <input type="text" id="search-btn" name="search" placeholder="search here" style=" height:70px;border-radius:32px;margin-top:20px;font-size:20px;background-color:#0e1233;border:1px solid;border-color:#ffffff21;color:#ffffff;">
+
+                                </div>
+                                <div>
+                                    <button style="background-color:#0e1233;border:none; width:30px;height:30px;margin-top:40px;margin-left:10px;" for="search-btn" type="submit" ><img src="/static/images/search-interface-symbol.png" alt=""></button>
+
+                                </div>
+                            </div>
+
+                        </form>
+                    <a href="{% url 'admin_products' %}"><button class="bg-white px-3 py-2 hover:bg-black hover:text-white ml-20 rounded-lg">show all</button></a>
+
+                    </div>
+                    
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-10 m-20">
+                {% for user in users %}
+          
+                    <div>
+
+                        <a href="{% url 'admin_products_list' %}?image_id={{user.id }}"><img class=" rounded-3xl" src="{{user.image.url}}" alt=""></a>
+                        <p class="text-white ml-10">{{user.name}}</p>
+
+                    </div>
+                    
+                {% endfor %}
+            </div>
+            
+        </div>
+
+
+
+        
+                    
+           
+
+        
+    </div>
+
+    
+
+    
+   
+</body>
+
+</html>

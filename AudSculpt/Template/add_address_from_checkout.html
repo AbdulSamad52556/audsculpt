@@ -1,0 +1,87 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff;
+        }
+
+        .form-container {
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-column {
+            padding: 10px;
+        }
+
+        .form-column label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-column input {
+            width: 100%;
+            background-color:#D9D9D9;
+            border-radius: 8px;
+            color:black;
+            padding: 8px;
+            border:None;
+            margin-bottom: 16px;
+        }
+
+        .form-column button {
+            background-color: #007bbf;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+{% tailwind_css %}
+
+<body>
+    <form method = "POST">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-column">
+                <label for="houseno">House No:</label>
+                <input type="text"  id="houseno" name="houseno">
+    
+                <label for="street">Street:</label>
+                <input type="text"  id="street" name="street">
+    
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city">
+    
+                <label for="landmark">Landmark:</label>
+                <input type="text" id="landmark" name="landmark">
+    
+                <label for="pincode">Pincode:</label>
+                <input type="text" id="pincode" name="pincode">
+    
+                <button type="submit">Add Address</button>
+            </div>
+        </div>
+    </form>
+    
+
+</body>
+</html>

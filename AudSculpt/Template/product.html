@@ -1,0 +1,428 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+</head>
+{% tailwind_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    body{
+        background-color: #ffffff;
+    }
+    
+    @keyframes pulseAnimation {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .animated-button {
+        animation: pulseAnimation 3s infinite;
+    }
+        
+        
+        
+</style>
+
+
+<body>
+    <div class="container-fluid">
+        <div class="bg-white flex justify-between " style="width:100%;height:70px;">
+            <div class="mt-4">
+                <img src="/static/images/AudSculpt-removebg-preview.png" alt="">
+            </div>
+            <div class="flex absolute mt-5 w-3/5 justify-end items-center ">
+                <a class="mr-10" href="/home">Home</a>
+                <a class="mr-10" href="">About Us</a>
+                <a class="mr-10" href="">Wishlist</a>
+                <a class="mr-10 underline font-bold" href="">products</a>
+            </div>
+            
+            <div class="h-7 flex mt-5 gap-10 mr-10">
+
+              <form method="POST" id="searchForm" style="display: none;">
+                {% csrf_token %}
+                <input type="text" class="border-1 text-sm rounded-lg w-40 h-8" name="search_query" id="searchInput" >
+                <input type="submit" class="cursor-pointer" value= "  ">
+              </form>
+
+              <button onclick="toggleSearchForm(); return false;" class="w-7" href="" id="toggleSearchButton">
+                <img src="/static/images/search.png" alt="">
+              </button>
+              
+
+              
+                
+                <a class="w-7" href="/cart"><img src="/static/images/cart1.png" alt=""></a>
+                <a class="w-7" href="/home"><img src="/static/images/profile.png" alt=""></a>
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="container-fluid" >
+        <div style="background-color:#0e1233" class="flex items-center justify-center">
+
+          <div class="w-full justify-end">
+            <h1 class="text-white text-bold text-center text-4xl m-5"><i>Shop With Us</i></h1>
+            
+          </div>
+          
+          <div>
+
+            <button id="openButton" class="right-4 w-16 bottom-4 text-white py-2 px-4 rounded"><img src="/static/images/filter.png" alt=""></button>
+
+          </div>
+
+        </div>
+
+    </div>
+    {% if err %}
+      <p class="text-red-500 text-center font-bold">{{err}}</p>
+    {% endif %}
+    <!-- component -->
+<!-- component -->
+<!-- This is an example component -->
+<!-- Create By Joker Banny -->
+
+  <!-- Header Navbar -->
+  <div class="container mx-auto flex max-w-6xl flex-wrap items-center justify-between">
+    
+    
+  </div>
+</nav>
+
+
+<!-- Title -->
+
+
+<!-- Tab Menu -->
+
+
+<!-- Product List -->
+<section class="py-10 bg-gray-100 ">
+  <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+   
+{% for product in product %}
+    
+    <article class="rounded-xl bg-white p-3 shadow-lg hover:shadow-2xl hover:transform hover:scale-105 duration-200 ">
+      <a href="{% url 'item_page' pk=product.id %}">
+    
+        <div class="relative flex items-end overflow-hidden rounded-xl">
+        {% for img in product.images.all %}
+
+          <img class="w-full" src="{{img.image.url}}" alt="Hotel Photo" />
+        {% endfor %}
+
+          
+        </div>
+
+        <div class="mt-1 p-2">
+          <h2 class="text-slate-700 truncate ">{{product.name }}</h2>
+
+          
+          {% for variant in product.varients.all %}
+              {% if product.discount %}
+              <div class="flex gap-3">
+                <p class="text-sm mt-3 font-bold text-red-500"><s>₹ {{variant.price}} </s> </p>
+                <p class="text-sm mt-3 font-bold text-green-500">{{product.discount}}% discount</p>
+              </div>
+              
+              
+              {% endif %}
+              <div class="mt-3 flex items-end justify-between">
+              {% if product.discount %}
+              <p class="text-lg font-bold text-blue-500">₹ {{variant.discount_price}}</p>
+              {% else %}
+              <p class="text-lg font-bold text-blue-500">₹ {{variant.price}}</p>
+              {% endif %}
+            {% if variant.stock > 0 %}
+
+              {% if product.id in cart %}
+                <div class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                  </svg>
+
+                  <a href="/cart"><button class="animated-button text-sm">Go to cart</button></a>
+
+                </div>
+              {% else %}
+                <div class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                  </svg>
+
+                  <a href="#"><button onclick="addItem(event,{{ product.id }})" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="animated-button text-sm">Add to cart</button></a>
+                  
+                </div>
+
+                
+                
+              {% endif %}
+            
+            {% endif %}
+            
+          </div>
+          {% if variant.stock <= 5 and variant.stock > 0%}
+              <div>
+                <p class="text-red-500 p-3">{{variant.stock}} stocks left </p>
+
+              </div>
+            {% elif variant.stock <= 0 %}
+            <div>
+                <p class="text-red-500 p-3">Out Of Stock</p>
+
+              </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </a>
+    </article>
+    
+
+    {% endfor %}
+ 
+  </div> 
+ <div class="pagination flex gap-5 justify-center items-center">
+    <span class="step-links">
+        {% if product.has_previous %}
+            <a href="?page=1"></a>
+            <a href="?page={{ product.previous_page_number }}">{{ product.previous_page_number }}</a>
+        {% endif %}
+
+        <span class="current font-bold text-xl">
+
+        {{ product.number }}
+              
+        </span>
+
+        {% if product.has_next %}
+            <a href="?page={{ product.next_page_number }}">{{ product.next_page_number }}</a>
+            <a href="?page={{ product.paginator.num_pages }}"> </a>
+        {% endif %}
+    </span>
+</div> 
+
+
+
+<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-blue-900 rounded-lg shadow dark:bg-gray-700">
+          
+          <div class="p-4 md:p-5 text-center">
+              <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+              <h3 class="mb-5 text-lg font-normal text-gray-200 dark:text-gray-400">you want to add this item to cart?</h3>
+              <button data-modal-hide="popup-modal" id="item-{{product.id}}" type="button" class="confirm-delete text-gray-200 bg-red-500 hover:bg-red-800 hover:text-white  focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                  Yes, I'm sure
+              </button>
+              <button data-modal-hide="popup-modal" type="button" class="cancel-delete  text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+</section>
+
+<div class="pointer-events-auto overflow-y-scroll relative w-screen max-w-sm" id="slide-over-panel" style="display: none;">
+  
+
+  <div class="bg-gray-100">
+
+    <div class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" id="overlay"></div>
+    
+      <div class="fixed inset-0 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+          <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div class="pointer-events-auto relative w-screen max-w-sm" id="slide-over-panel">
+              <div class="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
+                <button type="button" id="closeButton" class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+                  <span class="absolute -inset-2.5"></span>
+                  <span class="sr-only">Close panel</span>
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+    
+              <div class="flex flex-col h-screen overflow-y-scroll bg-white py-6 shadow-xl">
+                <div class="px-4 sm:px-6">
+                  <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Sort</h2>
+                </div>
+                <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                  <a href="/products"><button class="w-4/5 p-3 m-1 rounded-lg text-white bg-blue-900">Relevance</button></a>
+                  <a href="{% url 'products' %}?pk=products_low_to_high"><button class="w-4/5 p-3 m-1 rounded-lg text-white bg-blue-900">Price -- Low to High</button></a>
+                  <a href="{% url 'products' %}?pk=products_high_to_low"><button class="w-4/5 p-3 m-1 rounded-lg text-white bg-blue-900">Price -- High to Low</button></a>
+                  <a href="{% url 'products' %}?pk=obj_alpha_asc"><button class="w-4/5 p-3 m-1 rounded-lg text-white bg-blue-900">Sort ( A - Z )</button></a>
+                  <a href="{% url 'products' %}?pk=obj_alpha_desc "><button class="w-4/5 p-3 m-1 rounded-lg text-white bg-blue-900">Sort ( Z - A )</button></a>
+                </div>
+                <!-- <div class="px-4 sm:px-6">
+                  <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Brands</h2>
+                </div>
+                <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                  <button class="w-fit p-3 m-1 rounded-lg text-white bg-blue-900">Boat</button>
+                  <button class="w-fit p-3 m-1 rounded-lg text-white bg-blue-900">JBL</button>
+                  <button class="w-fit p-3 m-1 rounded-lg text-white bg-blue-900">Sony</button>
+                  <button class="w-fit p-3 m-1 rounded-lg text-white bg-blue-900">realme</button>
+                </div> -->
+                <div class="px-4 sm:px-6">
+                  <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Color</h2>
+                </div>
+                <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                  <a href="{% url 'products' %}?pk=black "><button class="w-fit p-2 text-black bg-black border-2"></button></a>
+                  <a href="{% url 'products' %}?pk=white "><button class="w-fit p-2 bg-white border-2"></button></a>
+                  <button class="w-fit p-2 bg-gray-500 border-2"></button>
+                  <button class="w-fit p-2 bg-blue-900 border-2"></button>
+                  <button class="w-fit p-2 bg-yellow-900 border-2"></button>
+                  <button class="w-fit p-2 bg-yellow-500 border-2"></button>
+                  <button class="w-fit p-2 bg-red-700 border-2"></button>
+                  <button class="w-fit p-2 bg-green-900 border-2"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+    
+    <script>
+      document.getElementById('openButton').addEventListener('click', function() {
+          document.getElementById('slide-over-panel').style.display = 'block';
+          document.getElementById('overlay').style.display = 'block';
+      });
+  
+      document.getElementById('closeButton').addEventListener('click', function() {
+          document.getElementById('slide-over-panel').style.display = 'none';
+          document.getElementById('overlay').style.display = 'none';
+      });
+
+      
+  </script>
+   
+    </div>
+  
+</div>
+<script>
+  function toggleSearchForm() {
+      var searchForm = document.getElementById('searchForm');
+      searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'block' : 'none';
+  }
+
+
+ 
+</script>
+
+<script>
+      function addItem(event, id) {
+
+        var modal = document.getElementById('popup-modal');
+        modal.style.display = 'flex';
+
+        modal.querySelector('.confirm-delete').onclick = function () {
+          $.get('/add_to_cart/', { 'pk': id }, function (data) {
+                if (data.status === 'ok') {    
+                  console.log(data);            
+                  window.location.reload()
+                }
+                modal.style.display = 'none';
+            });
+        };
+        modal.querySelector('.cancel-delete').onclick = function () {
+            modal.style.display = 'none';
+        };
+    }
+
+</script>
+
+<script>
+  document.getElementById('toggleSearchButton').onclick = toggleSearchInput;
+
+  function toggleSearchInput() {
+    var searchForm = document.getElementById('searchForm');
+    var searchInput = document.getElementById('searchInput');
+
+    if (searchForm.style.display === 'none') {
+      searchForm.style.display = 'block';
+      searchInput.focus();
+    }  else {
+      setTimeout(function() {
+        searchForm.style.display = 'none';
+      }, 1000); // delay hiding the form by 1 second
+    }
+  }
+  
+</script>
+
+
+<div class="container-fluid" style="width: 100%;height:400px;background-color:white; margin-top:50px">
+  <div class="flex justify-around mt-20">
+
+      <div> 
+          <h1>Our Store</h1>
+          <p class="mt-20">
+              <div >ASSET Orchestra ,</div>
+              <div class="mt-3"> Vetturoad , kaniyapuram </div>
+              <div class="mt-3"> TRIVANDRUM </div>
+              <div class="mt-3"> Kerala-695301</div>
+          </p>
+      </div>
+      <div class="vertical-line"></div>
+
+      <div>
+          <h1>Link</h1>
+          <p class="mt-20">
+              <div><a href="" >HOME</a> </div>
+
+             <div class="mt-3"> <a href="" class="mt-0">ABOUT</a></div>
+
+             <div class="mt-3"> <a href="" class="mt-10">CONTACT</a></div>
+
+              <div class="mt-3"><a href="" class="mt-10">SHOP</a></div>
+          </p>
+      </div>
+      <div class="vertical-line"></div>
+      <div>
+          <h1>Help</h1>
+          <p class="mt-20">
+              <div><a href="">Careers</a></div>
+
+             <div class="mt-3"><a href="">Privacy Policy</a></div>
+
+             <div class="mt-3"><a href="">
+              Terms and Conditions
+             </a></div>
+
+              <div class="mt-3"><a href="">Support</a></div>
+          </p>
+      </div>
+
+  </div>
+  
+</div>
+<p class="text-center">Copyright © 2023 | AudSculpt</p> 
+</body>
+       
+</html>

@@ -1,0 +1,459 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+</head>
+{% tailwind_css %}
+
+<style>
+    body{
+        background-color: #0e1233;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+<style>
+    @layer utilities {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+</style>
+
+  <!-- Create By Joker Banny -->
+<style>
+    @layer utilities {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+</style>
+<body>
+
+  {% if coupon_error %}
+  <div id="couponErrorModal" class="fixed top-10 left-2/4 p-3 rounded-lg z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto hidden transform -translate-x-1/2">
+    <div class="bg-black bg-opacity-50 absolute inset-0"></div>
+
+    <div class="bg-white rounded-lg p-6 mx-4 md:max-w-md w-full text-center relative z-10">
+        <!-- Your modal content here -->
+        <h2 class="text-xl font-semibold mb-4">Coupon Error</h2>
+        <p class="text-gray-600">{{ coupon_error }}</p>
+    </div>
+</div>
+
+
+<script>
+  // JavaScript code to show and hide the modal
+  document.addEventListener('DOMContentLoaded', function () {
+      var couponErrorModal = document.getElementById('couponErrorModal');
+
+      if (couponErrorModal) {
+          couponErrorModal.classList.remove('hidden');
+
+          setTimeout(function () {
+              couponErrorModal.classList.add('hidden');
+          }, 2000); // Adjust the time (in milliseconds) as needed
+      }
+  });
+</script>
+  {% endif %}
+    <div class="container-fluid" style="width: 100%;">
+        <div class="bg-white flex justify-between " style="width:100%;height:80px;">
+            <div class="mt-4">
+                <img class="absolute" src="/static/images/AudSculpt-removebg-preview.png" alt="">
+            </div>
+            <div class="flex mt-6 ml-28">
+                <a class="mr-10" href="/home">Home</a>
+                <a class="mr-10" href="">About Us</a>
+                <a class="mr-10" href="">Wishlist</a>
+                <a class="mr-10" href="/products">products</a>
+            </div>
+            <div class="h-7 flex mt-5 gap-10 mr-10">
+                <a href="/products" class="w-7"><img  src="/static/images/search.png" alt=""></a>
+                <a href="/cart" class="w-7"><img src="/static/images/cart1.png" alt="">_____</a>
+                <a href="/home" class="w-7"><img src="/static/images/profile.png" alt=""></a>
+            </div>
+
+        </div>
+    </div>
+    
+           
+    
+        
+    
+        
+    {% if not cart %}
+    <div class="w-100 flex flex-col items-center p-5" style="background-color:white;">
+        <img src="/static/images/Ccart.jpg" class="rounded-3xl" alt="">
+        <h3 class="text-center font-bold text-3xl text-gray-400 m-5"><i>Cart is Empty</i></h3>
+        <a href="/products"><button class="bg-blue-700 text-white p-3 rounded-3xl">Go To Shopping</button></a>
+    </div>
+    {% else %}
+
+    <div class="flex w-full p-5 gap-5">
+      <div style="width: 50%;background-color:rgb(241, 241, 241);" class="h-full p-5 mt-5 mx-auto max-w-5xl justify-center md:flex md:space-x-6 xl:px-0 rounded-lg items-center">
+
+          <div>
+              <h3 class="text-xl">Deliver To : </h3>
+          </div>
+          <div>
+              <h3 class="font-bold"> {{user.first_name}} {{user.last_name}}</h3>
+              {% if address %}
+                  <h3>{{address.houseno}} {{address.street}} {{address.landmark}} {{address.city}} {{address.pincode}}</h3>
+              {% endif %}            
+          </div>
+  
+      </div>
+
+      {% if cart_price > 999 %}
+        {% if coupon %}
+      <div class="flex p-5" >
+        <div class="w-full items-center h-fit bg-white rounded-lg px-14">
+          <h1 class="font-bold p-3 flex justify-center items-center ">Available Coupons</h1>
+          {% for coupons in coupon %}
+          {% if coupons.count > 0 and coupons.ending_date > today %}
+
+          <div class="flex p-1">
+            <input id="contentToCopy{{forloop.counter}}" type="text" class="text-center border-none" placeholder="{{coupons.code}}" value="{{coupons.code}}" style="background-color: #e4e4e4;" disabled>
+            <button onclick="copyToClipboard('{{forloop.counter}}')" class="bg-yellow-400 py-2 px-4 font-bold">Copy</button>
+  
+          </div>
+          {% endif %}
+          {% endfor %}
+    
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+
+
+    </div>
+    
+    
+    <h1 class="mb-10 text-center w-full text-white text-2xl font-bold">Cart Items</h1>
+    
+    <div class="justify-between">
+      {% for cart in cart %}
+      <div class="flex flex-col">
+      
+      
+              <div class="mx-auto w-full items-center max-w-5xl flex-col md:flex md:space-x-6 xl:px-0">
+                  <div class="rounded-lg md:w-3/4">
+                    <div class="justify-between mb-6 rounded-lg bg-white p-5 shadow-md sm:flex sm:justify-start">
+                      {% for img in cart.product.images.all %}
+
+            
+                        {% if forloop.first %}
+                            <img class="w-20" src="{{ img.image.url }}" alt="First Image" class="w-full rounded-lg sm:w-40" />
+                        {% endif %}
+                      {% endfor %}
+                      
+                      <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                        <div class="mt-5 sm:mt-0">
+                          <h2 class="text-sm font-bold text-gray-900">{{cart.product.name|truncatewords:15}}</h2>
+                          {% for variants in cart.product.varients.all %}
+                          {% if variants.stock < 5 %}
+                          <div>
+                            <p class="text-red-500 p-3">{{variants.stock}} stocks left </p>
+
+                          </div>
+                          {% endif %}
+                          
+                        {% endfor %}
+                        </div>
+                        
+
+                        <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                          <div class="flex items-center border-gray-100" >
+                                  <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"  style="background-color: #0e1233;">
+                                      <a class="text-white" id="incre" onclick="decrementCount({{ cart.id }})"> - </a>
+                                  </span>
+
+                                <input class="h-8 w-12 border bg-white text-center text-xs outline-none" type="number" value="{{ cart.quantity }}" id="quant-{{ cart.id }}" min="1" data-cart-id="{{ cart.id }}"/>
+
+                                  <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:text-blue-50"  style="background-color: #0e1233;">
+                                      <a onclick="incrementCount({{cart.id}})" class="text-white" id="incre"> + </a>
+                                  </span>
+
+                          </div>
+                         
+                          <div class="flex flex-col items-center space-x-4">
+                            {% for variants in cart.product.varients.all %}
+                              {% if cart.product.discount %}
+                              <p class="text-l"><s>₹{{variants.price}}</s></p>
+
+                                <p class="text-l">₹{{variants.discount_price}}</p>
+                              {% else %}
+                                <p class="text-l">₹{{variants.price}}</p>
+                              {% endif %}
+                            
+                            {% endfor %}
+
+
+                                <button onclick="deleteItem({{ cart.id }})" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
+            
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500 rounded-xl text-white hover:bg-blue-900"  style="background-color: red;">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                  </svg></button>
+
+
+                            <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                              <div class="relative p-4 w-full max-w-md max-h-full">
+                                  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                      
+                                      <div class="p-4 md:p-5 text-center">
+                                          <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                          </svg>
+                                          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to remove this item?</h3>
+                                          <button data-modal-hide="popup-modal" id="item-{{cart.id}}" type="button" class="confirm-delete text-gray-500 bg-red-600 hover:bg-red-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                                              Yes, I'm sure
+                                          </button>
+                                          <button data-modal-hide="popup-modal" type="button" class="cancel-delete  text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+
+                            
+                          </div>
+                         
+
+
+
+
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+                  {% endfor %}
+      </div>  
+      
+      <div class="hell flex px-7 py-5 justify-center items-center flex-col">
+        <div class="mt-6 h-fit rounded-lg w-2/3 border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+          <div class="mb-2 flex justify-between">
+            <p class="text-gray-700">Subtotal</p>
+       
+
+            <p class="text-gray-700" id="total" onclick=total({{total}})>₹ {{total}}</p>
+     
+
+
+          </div>
+          
+          <div class="flex justify-between">
+            <p class="text-gray-700">Shipping</p>
+            <p class="text-gray-700">+ ₹ 40</p>
+          </div>
+          
+          {% for cart in cart %}
+          {% if cart.product.discount %}
+          {% if forloop.first %}
+
+          <div class="flex justify-between mt-2">
+            <p class="text-gray-700">Saved upto</p>
+            <p class="text-gray-700"><s>₹ {{saved}}</s></p>
+          </div>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          <hr class="my-4" />
+          <div class="flex justify-between">
+            <p class="text-lg font-bold">Total</p>
+            <div class="">
+              <p class="mb-1 text-lg font-bold" id="subtotal" onclick=subtotal({{subtotal}})>₹ {{subtotal}}</p>
+              <p class="text-sm text-gray-700">including GST</p>
+            </div>
+            
+          </div>
+          <div class="p-3">
+            {% if coupon_applied %}
+            <form method="post">
+              {% csrf_token %}
+              <input type="text" class="border-none w-7/12" disabled placeholder="coupon Applied" style="background-color: #e4e4e4;" name="coupon" id="coupon">
+              
+              <button class="bg-blue-900 text-white py-2 px-5" for="coupon">cancel</button>
+              
+            </form>
+            {% else %}
+
+
+            {% if cart_price > 999 %}
+              <form method="post" id="coupon-form">
+                {% csrf_token %}
+                <input type="text" class="border-none w-7/12" style="background-color: #e4e4e4;" name="coupon" id="coupon">
+                
+
+                
+                <button class="bg-blue-900 text-white p-2" for="coupon">Reedem code</button>  
+                
+              </form>
+              {% endif %}
+             
+            {% endif %}
+        
+        
+
+
+        </div>
+        {% if err %}
+          <p class="text-red-500 text-center">{{err}}</p>
+        {% endif %}
+          <a href="/check"><button class="mt-6 w-full rounded-md bg-blue-900 py-1.5 font-medium text-blue-50 hover:bg-blue-800">Check out</button></a>
+        </div>
+
+
+      
+      </div>
+
+
+
+
+
+
+{% endif %}
+
+      
+    </div>
+  </div>
+    <script>
+        function incrementCount(id) {
+            $.get('/increment_count/', {'pk': id}, function(data) {
+                $('#quant-' + id).val(data.quantity);
+                $('#total').text('₹ ' + data.total);
+                $('#subtotal').text('₹ ' + data.subtotal);
+               
+            });
+        }
+
+        function decrementCount(id) {
+            $.get('/decrement_count/', {'pk': id}, function(data) {
+                $('#quant-' + id).val(data.quantity);
+                $('#total').text('₹ ' + data.total);
+                $('#subtotal').text('₹ ' + data.subtotal);
+                
+            });
+        }
+        function deleteItem(id) {
+
+          var modal = document.getElementById('popup-modal');
+          modal.style.display = 'flex';
+      
+          modal.querySelector('.confirm-delete').onclick = function() {
+              $.get('/cart_delete/', {'pk': id}, function(data) {
+                  if (data.status === 'ok') {
+                    window.location.reload()
+                      document.getElementById('item-' + id).remove();
+
+                  }
+                  modal.style.display = 'none';
+              });
+          };
+          modal.querySelector('.cancel-delete').onclick = function() {
+              modal.style.display = 'none';
+          };
+      }
+      function copyToClipboard(a) {
+        var inputElement = document.getElementById( `contentToCopy${a}`);
+
+        inputElement.removeAttribute('disabled');
+
+        inputElement.select();
+
+        document.execCommand('copy');
+
+        window.getSelection().removeAllRanges();
+
+        inputElement.setAttribute('disabled', 'true');
+
+        console.log('Text successfully copied to clipboard:', inputElement.value);
+    }
+
+    function loadCouponForm() {
+      // Make an AJAX request to the Django view
+      $.ajax({
+          type: 'GET',
+          url: '/cart/',
+          success: function(data) {
+              // Update the content of a specific HTML element with the received HTML
+              $('#hell').html(data);
+          },
+          error: function(error) {
+              console.log(error);
+          }
+      });
+  }
+  $('#incre').click(function() {
+    loadCouponForm();
+});
+        
+    </script>
+
+
+</body>
+<div class="w-full h-100 p-20" style="background-color:white; ">
+    <div class="flex justify-around">
+
+        <div> 
+            <h1>Our Store</h1>
+            <p class="mt-20">
+                <div >ASSET Orchestra ,</div>
+                <div class="mt-3"> Vetturoad , kaniyapuram </div>
+                <div class="mt-3"> TRIVANDRUM </div>
+                <div class="mt-3"> Kerala-695301</div>
+            </p>
+        </div>
+        <div class="vertical-line"></div>
+
+        <div>
+            <h1>Link</h1>
+            <p class="mt-20">
+                <div><a href="" >HOME</a> </div>
+
+               <div class="mt-3"> <a href="" class="mt-0">ABOUT</a></div>
+
+               <div class="mt-3"> <a href="" class="mt-10">CONTACT</a></div>
+
+                <div class="mt-3"><a href="" class="mt-10">SHOP</a></div>
+            </p>
+        </div>
+        <div class="vertical-line"></div>
+        <div>
+            <h1>Help</h1>
+            <p class="mt-20">
+                <div><a href="">Careers</a></div>
+
+               <div class="mt-3"><a href="">Privacy Policy</a></div>
+
+               <div class="mt-3"><a href="">
+                Terms and Conditions
+               </a></div>
+
+                <div class="mt-3"><a href="">Support</a></div>
+            </p>
+        </div>
+
+    </div>
+    
+</div>
+
+<p class="text-center text-white text-sm">Copyright © 2023 | AudSculpt</p>
+</html>
+
+

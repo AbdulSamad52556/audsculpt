@@ -1,0 +1,120 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>otp sending</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <style>
+        body{
+            background-color: #0e1233;
+            height: 100%;
+           
+            
+        }
+        .container{
+            display: flex;
+            text-align: center;
+        }
+        .msg-part{
+            background-color: #15193d;
+            width: 450px;
+            height: 485px;
+            margin: 80px;
+            color: #ffffff34;
+            border-radius: 22px;
+            display: flex;
+            justify-content: center;
+        }
+       
+        .login-form{
+            background-color: #ffffff;
+            height: 485px;
+            width: 650px;
+            margin-top: 80px;
+            border-radius: 22px;
+        }
+        .msg {
+            text-align: center;
+            margin-top: 100px;
+        }
+        .msg h1{
+            font-size: 40px;
+        }        
+        .form input{
+            height: 50px;
+            width: 76%;
+            display: flex;  
+            margin-top: 40px;
+            margin-left: 65px;
+            border-radius: 12px;
+            color: #0e1233;
+            border: none;
+        }
+        .form{
+            margin-top: 70px;
+        }
+      
+        .form button{
+            height: 50px;
+            width: 80%;
+            margin-top: 40px;
+            background-color: #0e1233;
+            color: #ffffff;
+            border-radius: 12px;
+            border: none;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .login-form input{
+            background-color: rgba(0, 0, 0, 0.158);
+        }
+        .inp{
+            padding-left:20px ;
+        }
+        
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        
+    </style>
+    
+</head>
+{% tailwind_css %}
+
+<body>
+
+    <div class="body">
+        <div class="container">
+            <div class="msg-part">
+                <div class="msg">
+                <h2 class="text-3xl">Please Enter your Email</h2>
+                </div>
+            </div>
+            <div class="login-form">
+                <div class="form">
+                    <form method='POST' >
+                    {% csrf_token %}
+                        <input class="inp" type="Email" placeholder="Email" name='email'>
+                        
+                        <button type='submit'>Get OTP</button>
+                        {% if err %}
+                            <p class="text-red-500 text-sm ">{{err}}</p>
+                        {% endif %}
+
+                    </form>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+  
+</body>
+</html>

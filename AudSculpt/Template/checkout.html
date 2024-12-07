@@ -1,0 +1,476 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudSculpt</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+    <style>
+        
+        .accordion-item {
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            background-color: #ffffff;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 10px;
+            background-color: rgb(165, 165, 165);
+        }
+    </style>
+</head>
+{% tailwind_css %}
+
+<body>
+    <div class="container-fluid" style="width: 100%;">
+        <div class="bg-white flex justify-between h-full w-full">
+            <div class="mt-4">
+                <img src="/static/images/AudSculpt-removebg-preview.png" alt="">
+            </div>
+            <div class="flex items-center space-x-4 lg:space-x-10 ml-5 lg:ml-0">
+                <a class="text-gray-700 hover:text-gray-900" href="/home">Home</a>
+                <a class="text-gray-700 hover:text-gray-900" href="">AboutUs</a>
+                <a class="text-gray-700 hover:text-gray-900" href="">Wishlist</a>
+                <a class="text-gray-700 hover:text-gray-900" href="/products">products</a>
+            </div>
+            <div class="flex items-center gap-4 ml-5 lg:ml-0">
+                <a href="" class="w-7"><img  src="/static/images/search.png" alt=""></a>
+                <a href="/cart" class="w-7"><img src="/static/images/cart1.png" alt=""></a>
+                <a href="/home" class="w-7"><img src="/static/images/profile.png" alt=""></a>
+            </div>
+
+        </div>
+        <div class="w-full h-20 flex items-center justify-center" style="background-color: #0e1233;">
+            <h1 class="text-center text-white text-3xl justify-center"><i>Order Summary</i></h1>
+            
+        </div> 
+    </div>
+    {% if cart %}
+        <div class="flex">
+            <div style="width:70%">
+                <div class="w-full flex justify-center mt-10 mb-10">
+                    <div style="width:80%;background-color:#0e1233" id="addresss" class="p-1 rounded-lg text-white flex justify-around">
+                        <div class="p-5">
+                            <h3 class="text-xl font">Deliver To :</h3>
+            
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">{{user.first_name}} {{user.last_name}}</h3>
+                            {% if address %}
+                                <h3>{{address.houseno}} {{address.street}} {{address.landmark}} {{address.city}} {{address.pincode}}</h3>
+                            {% endif %}
+                        </div>
+                        <div class="p-5">
+                        {% if address %}
+                            <button type="button" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="p-2 rounded-lg" style="background-color:blue;">Change</button>
+
+                        {% else %}
+                            <a href="/add_address_from_checkout "><button  class="p-2 rounded-lg" style="background-color:blue;">Add</button></a>
+                        {% endif %}
+                        </div>
+
+
+
+                        
+
+
+                        <!-- Main modal -->
+                        <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                <!-- Modal content -->
+                                <div class="relative rounded-lg shadow dark:bg-gray-700" style="background-color:#0e1233;">
+                                    <!-- Modal header -->
+                                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                            Select your Address
+                                        </h3>
+                                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="p-4 md:p-5">
+                                        <form class="space-y-4" method="POST" >
+                                            {% csrf_token %}
+                                            {% for address in addresses %}
+                                            <div>
+                                                <input type="radio" name="address" value="{{address.id}}" style="width: 4%;" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                                                <label for="address">{{address.houseno}} {{address.street}} {{address.landmark}} {{address.city}} {{address.pincode}}</label>
+
+                                            </div>
+                                            {% endfor %}
+                                            <button type="submit" name="change_address" style="background-color: blue;" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">select</button>
+                                            
+                                        </form>
+                                        {% if ad %}
+                                            <a href="/add_address_from_checkout"><button style="background-color: blue;" class="w-full mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Address</button></a>
+                                        {% endif %}
+                                        </div>
+                                </div>
+                            </div>
+                        </div> 
+
+
+                    </div>
+            
+                </div>
+            
+                {% for cart in cart %}
+                    {% for products in cart.product.images.all %}
+                                {% if forloop.first %}
+
+                        <div class="w-full flex justify-center mt-1">
+                            <div style="width:80%;background-color:#0e1233" class="md:w-3/4 lg:w-2/3 xl:w-1/2 bg-blue-900 p-3 rounded-lg flex shadow-xl">
+                                <div class="w-20">
+                                    <img class="h-fit object-cover rounded-2xl" src="{{products.image.url}}" alt="">
+            
+                                </div>
+                                <div class="flex-col">
+                                    <div class="text-white ml-10 mr-10">
+                                        {{cart.product.name}}
+                                    </div>
+                                    {% for variant in cart.product.varients.all %}
+                                        <div class="flex">
+                                            <div>
+                                                <p class="p-3 text-white ml-10  text-2xl ">₹{{variant.price}}</p>
+            
+                                            </div>
+                                            <div>
+                                                <p class="p-4 text-white ">quantity ({{cart.quantity}})</p>
+            
+                                            </div>
+                                            
+                                        </div>
+                                    {% endfor %}
+                
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    {% endfor %}
+                {% endfor %}
+            
+            </div>
+            
+            <div class="pt-10 w-96">
+                <div class="w-full rounded-lg border bg-white p-3 shadow-md md:mt-0 sm:w-1/2 lg:w-1/3">
+                    <div class="mb-2 flex justify-between">
+                    <p class="text-gray-700 ">Subtotal </p>
+                
+                    <p class="text-gray-700 "> ₹{{ total}}</p>
+        
+                    </div>
+                    {% if disc_price %}
+                    <div class="mb-2 flex justify-between">
+                    <p class="text-gray-700 ">Coupon offer </p>
+                
+                    <p class="text-gray-700 ">- ₹{{ disc_price}}</p>
+        
+                    </div>
+                    {% endif %}
+                    <div class="flex justify-between">
+                    <p class="text-gray-700">Shipping</p>
+                    <p class="text-gray-700">+ ₹40</p>
+                    </div>
+                    <hr class="my-4" />
+                    <div class="flex justify-between">
+                    <p class="text-lg font-bold">Total</p>
+                    <div >
+                        <p class="mb-1 text-lg font-bold" id="subtotal" ></p>
+                        <p class="text-sm text-gray-700">including GST</p>
+                    </div>
+                    </div>
+                    
+                    
+                    <a href="#payments"><button class="mt-6 w-full rounded-md bg-blue-900 py-1.5 font-medium text-blue-50 hover:bg-blue-800">Proceed to pay</button></a>
+                </div>
+            </div>
+        </div>
+        <a id="payments">
+        <h3 class="text-center p-10 font-bold text-3xl mt-20"><i>Payment Options</i></h3>
+        </a>
+
+        <div class="w-full flex justify-center" id="payments" style="background-color: #0e1233;">
+            {% if address %}
+
+            <form method="POST" class="w-96" id="form_id">
+                {% csrf_token %}
+                <div style="background-color:#0e1233;" class="p-10 rounded-3xl flex flex-col gap-4">
+                    <div class="bg-white p-5">
+                        <label for="wallet_radio">
+                            <input type="radio" id="wallet_radio" name="payment_method" value="wallet" > Wallet
+                        </label>
+                    </div>
+
+                    <div id="dropdown" style="display: none;">
+                        <div>
+                            
+                            <p class="bg-gray-800 rounded text-center p-2 text-yellow-300 font-bold">Your wallet amount: ₹ {{wallet.amount}}</p>
+                        </div>
+                    </div>
+                    
+                    {% if wall_err %}
+                     <p class="text-red-500 text-center">{{wall_err}}</p>
+                    {% endif %}
+
+                    <!-- <input type="hidden" id="payment_method_input" name="payment_method" value=""> -->
+
+
+                    <input type="hidden" name="address" value="{{address.id}}">
+                    <div class="bg-white p-5">
+                        <label for="cod_radio">
+                            <input type="radio" id="cod_radio" name="payment_method" value="cod" > Cash on Delivery (COD)
+                        </label>
+                    </div>
+        
+                    <div class="bg-white p-5">
+                        <label for="online_radio">
+                            <input type="radio" id="rzp-button1" name="payment_method" value="online"> Online
+                        </label>
+                    </div>
+                    
+                    {% if err %}
+                        <p class="text-red-500 text-center">{{err}}</p>
+                    {% endif %}
+
+                        <div class="bg-blue-900 w-full hover:bg-blue-800 items-center justify-center text-center rounded-lg text-white font-bold">
+                            <button class="w-full p-3" type="submit"  id="proceedButton">Place Order</button>
+                        </div>
+                
+                </div>
+            </form>
+            {% else %}
+
+            <p>Click <a href="#addresss">here</a> to add address</p>
+
+            {% endif %}
+
+        </div>
+    {% else %}
+
+        <div class="border flex flex-col items-center">
+            <h1 class="text-4xl font-bold text-center  p-10">
+                Oops ! 
+            </h1>
+            <a href="/products" class="p-5">
+                <button class="rounded-lg p-5 text-white text-2xl" style="background-color: orangered;">Continue Shopping</button>
+
+            </a>
+        </div>
+    
+       
+
+    {% endif %}
+
+    <script>
+        
+
+        var element = document.getElementById("subtotal");
+        let tot = {{sub_total}}+40
+        element.innerHTML = '₹ '+ tot
+
+        
+    </script>
+
+    <script>
+        document.getElementById('wallet_radio').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('dropdown').style.display = 'block';
+                console.log(this.value)
+            } 
+        });
+
+        document.getElementById('cod_radio').addEventListener('change',function(){
+            if (this.checked){
+                document.getElementById('dropdown').style.display = 'none';
+            }
+        })
+        
+        document.getElementById('rzp-button1').addEventListener('change',function(){
+            if (this.checked){
+                document.getElementById('dropdown').style.display = 'none';
+            }
+        })
+        
+        
+    </script>
+    
+</body> 
+<div class="container-fluid  mt-20" style="width: 100%;height:400px;background-color:white; ">
+    <div class="flex justify-around mt-20">
+
+        <div> 
+            <h1>Our Store</h1>
+            <p class="mt-20">
+                <div >ASSET Orchestra ,</div>
+                <div class="mt-3"> Vetturoad , kaniyapuram </div>
+                <div class="mt-3"> TRIVANDRUM </div>
+                <div class="mt-3"> Kerala-695301</div>
+            </p>
+        </div>
+        <div class="vertical-line"></div>
+
+        <div>
+            <h1>Link</h1>
+            <p class="mt-20">
+                <div><a href="" >HOME</a> </div>
+
+               <div class="mt-3"> <a href="" class="mt-0">ABOUT</a></div>
+
+               <div class="mt-3"> <a href="" class="mt-10">CONTACT</a></div>
+
+                <div class="mt-3"><a href="" class="mt-10">SHOP</a></div>
+            </p>
+        </div>
+        <div class="vertical-line"></div>
+        <div>
+            <h1>Help</h1>
+            <p class="mt-20">
+                <div><a href="">Careers</a></div>
+
+               <div class="mt-3"><a href="">Privacy Policy</a></div>
+
+               <div class="mt-3"><a href="">
+                Terms and Conditions
+               </a></div>
+
+                <div class="mt-3"><a href="">Support</a></div>
+            </p>
+        </div>
+
+    </div>
+    
+</div>
+<p class="text-center">Copyright © 2023 | AudSculpt</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalButtons = document.querySelectorAll('[data-modal-toggle]');
+            const modalCloseButtons = document.querySelectorAll('[data-modal-hide]');
+            const modals = document.querySelectorAll('[data-modal-target]');
+
+            modalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetModal = document.getElementById(button.dataset.modalTarget);
+
+                if (targetModal) {
+                targetModal.classList.toggle('hidden');
+                document.body.classList.toggle('overflow-hidden');
+                }
+            });
+        });
+
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetModal = document.getElementById(button.dataset.modalHide);
+
+                if (targetModal) {
+                targetModal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+                }
+            });
+        });
+
+            modals.forEach(modal => {
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                document.body.classList.remove('overflow-hidden');
+                }
+            });
+        });
+    });
+    </script>
+
+    <script>
+
+       
+        function submitForm() {
+            // Assuming your form has an ID, you can use it to select the form
+            var form = document.getElementById('form_id');
+            
+            // Submit the form
+            form.submit();
+        }
+    
+        var options = {
+            "key": 'rzp_test_02UcDar3EcfvdG',
+            "amount": "{{order.price}}",
+            "currency": "INR",
+            "name": "AudSculpt",
+            "description": "Purchases",
+            "image": "{% static 'images/AudSculpt-removebg-preview.png' %}",
+            "order_id": "{{order.id}}",
+            "handler": function (response) {
+                $.ajax({
+                    url: '/razor_success/',
+                    type: 'POST',
+                    data: {
+                        'razorpay_payment_id': response.razorpay_payment_id,
+                        'razorpay_order_id': response.razorpay_order_id,
+                        'razorpay_signature': response.razorpay_signature,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    },
+                    success: function (data) {
+                        console.log('success');
+
+                        var $j = jQuery.noConflict();
+                        
+                        //$('#payment_method_input').val('online');
+                        
+                        setTimeout(function() {
+                        
+                            $j('#rzp-button1').attr('checked', true);
+                            
+                            submitForm();
+                        });
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            },
+            
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+    
+        var rzp1 = new Razorpay(options);
+    
+        rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        });
+    
+        document.getElementById('rzp-button1').onclick = function(e){
+            console.log('hello')
+            rzp1.open();
+            e.preventDefault();
+        };
+    </script>
+    
+
+    
+  
+</html>

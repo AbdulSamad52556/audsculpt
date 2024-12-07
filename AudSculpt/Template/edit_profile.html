@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Form</title>
+    
+
+    
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #15193D;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow:3px 3px 3px #000;
+        }
+
+        .form-column {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .form-column label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-column input,
+        .form-column select {
+            width: 100%;
+            padding: 8px;
+            height: 50px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        input,select{
+            border:none;
+            border-radius:10px;
+            box-shadow:5px 5px 5px #888888;
+            background-color:rgb(211, 211, 211);
+        }
+
+        .form-column button ,button {
+            background-color: #0e1233;
+            width: 200px;
+            color: #fff;
+            padding: 15px;
+            border: none;
+            box-shadow:5px 5px 5px #888888;
+            border-radius: 25px;
+            cursor: pointer;
+            
+        }
+        button:hover{
+            background-color:#15193D;
+        }
+    </style>
+</head>
+ 
+<body>
+    
+    <form method="POST" enctype="multipart/form-data" id="uploadForm">
+        {% csrf_token %}
+        <div class="mt-4">
+            <a href="/home"><img src="/static/images/AudSculpt-removebg-preview.png" alt=""></a>
+        </div>
+        <div class="form-container">
+            <div class="form-column">
+                <label for="firstname">First Name:</label>
+                <input type="text" value="{{user.first_name}}" id="firstname" name="firstname" required>
+
+                <label for="lastname">Last Name:</label>
+                <input type="text" value="{{user.last_name}}" id="lastname" name="lastname" required>
+
+                <label for="username">Username:</label>
+                <input type="text" value="{{user.username}}" id="username" name="username" required>
+
+                <label for="age">Age:</label>
+                <input type="number" value="{{user.age}}" id="age" name="age">
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" value="{{ user.dob|date:'Y-m-d' }}" id="dob" name="dob">
+            </div>
+
+            <div class="form-column">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="phone">Phone:</label>
+                <input type="tel" value="{{user.phone}}" id="phone" name="phone">
+
+                <label for="altphone">Alt Phone:</label>
+                <input type="tel" value="{{user.altphone}}" id="altphone" name="altphone">
+            
+                <label for="photo">Choose a photo:</label>
+                <input type="file" value="" id="photo" name="photo">
+
+                <button type="submit" onclick="submitForm()">Save Edit</button>
+                
+            </div>
+        </div>
+        
+    </form>
+    <div>
+        <a href="{{a}}"><button style="margin-top: 10px;">Go Back</button></a>
+
+    </div>
+  
+   
+
+</body>
+</html>

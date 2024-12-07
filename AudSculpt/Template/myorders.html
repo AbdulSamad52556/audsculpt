@@ -1,0 +1,207 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+</head>
+{% tailwind_css %}
+
+<body>
+    <div class="container-fluid" style="width:100%;">
+        <div class="bg-white flex justify-between h-full w-full">
+            <div class="mt-4">
+                <img src="/static/images/AudSculpt-removebg-preview.png" alt="">
+            </div>
+            <div class="flex items-center space-x-4 lg:space-x-10 ml-5 lg:ml-0">
+                <a class="text-gray-700 hover:text-gray-900" href="/home">Home</a>
+                <a class="text-gray-700 hover:text-gray-900" href="">AboutUs</a>
+                <a class="text-gray-700 hover:text-gray-900" href="">Wishlist</a>
+                <a class="text-gray-700 hover:text-gray-900" href="/products">products</a>
+            </div>
+            <div class="flex items-center gap-4 ml-5 gap-10 mr-10 lg:ml-0">
+                <a href="/cart" class="w-7"><img src="/static/images/cart1.png" alt=""></a>
+                <a href="/home" class="w-7"><img src="/static/images/profile.png" alt=""></a>
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="container-fluid" >
+        <div style="width:100%;height:80px; background-color:#0e1233" class="flex items-center justify-center">
+            <h1 class="text-white text-bold text-center text-4xl m-5"><i>My Orders</i></h1>
+        </div>
+    </div>
+
+
+
+    <div class="bg-gray-100 p-4">
+
+    <div class="max-w-full overflow-x-auto">
+        <table class="table-auto min-w-full bg-white border border-gray-300">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Order_id</th>
+                    <th class="py-2 px-4 border-b">quantity</th>
+                    <th class="py-2 px-4 border-b">Price</th>
+                    <th class="py-2 px-4 border-b">Date</th>
+                    <th class="py-2 px-4 border-b">Status</th>
+                    <th class="py-2 px-4 border-b">Action</th>
+                </tr>
+            </thead>
+
+            {% for order in orders %}
+
+            
+
+            <tbody>
+                <!-- Repeat this row structure for each row of data -->
+                <tr>
+                    <td class="py-2 px-4 border-b max-w-xs font-bold text-center break-words"><a href="{% url 'order_details' %}?pk={{ order.id }}">{{order.id}}
+                        </a></td>
+                    
+                        <td class="py-2 px-4 border-b font-bold max-w-xs text-center break-words">{{order.quantity}}</td>
+                    <td class="py-2 px-4 border-b font-bold text-center max-w-xs break-words"><h2 class="p-5 text-l">₹{{order.price}}</h2>
+                    <td class="py-2 px-4 border-b max-w-xs break-words text-center"><p class="text-sm font-bold p-5 lg:flex flex-col">
+
+                                {{order.date}}
+                            </p></td>
+</td>
+                    <td class="py-2 px-4 border-b max-w-xs break-words text-center">{% if order.status == 'Cancelled' %}
+                                <p class="text-red-700 font-bold text-sm p-5">{{order.status}}</p> 
+                            {% elif order.status == 'Delivered' %}    
+                                <p class="text-green-700 font-bold text-sm p-5">{{order.status}}</p>
+                            {% elif order.status == 'Ordered' %}
+                                <p class="text-blue-700 font-bold text-sm p-5">{{order.status}}</p>
+                            {% elif order.status == 'Returning' %}
+                                <p class="text-blue-400 font-bold text-sm p-5">{{order.status}}</p>
+                            {% elif order.status == 'Returned' %}
+                                <p class="text-green-900 font-bold text-sm p-5">{{order.status}}</p>
+                            {% endif %}</td>
+                    
+                        
+                    <td class="py-2 px-4 border-b max-w-xs break-words text-center">
+                            {% if order.status == 'Delivered' %}
+                                <a href="{% url 'invoice_pdf' pk=order.id %}" class="font-bold text-sm h-1/2 m-4 rounded-xl p-3 bg-yellow-500"  target="_blank" download="invoice.pdf">Invoice</a>
+                            {% elif order.status != 'Cancelled' and order.status != 'Delivered' and order.status != 'Returning' and order.status != 'Returned' %}
+                                <a href="#">
+                                    <button onclick="cancelOrder(event,{{ order.id }})" data-modal-target="popup-modal" data-modal-toggle="popup-modal"  class="font-bold text-sm h-1/2 m-4 rounded-xl p-3 text-white bg-blue-800">Cancel</button>
+                                </a>
+                            {% elif order.status == 'Delivered' and date_valid %}
+                            <a href="{% url 'return_order' pk=order.id %}">
+                                    <button class="font-bold text-sm h-1/2 m-4 rounded-xl p-3 text-white bg-red-700">Return</button>
+                                </a>
+                            {% endif %}</td>
+                </tr>
+                <!-- Repeat this row structure for each row of data -->
+            </tbody>
+                      
+        
+                  
+        {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+
+<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-blue-900 rounded-lg shadow dark:bg-gray-700">
+          
+          <div class="p-4 md:p-5 text-center">
+              <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+              <h3 class="mb-5 text-lg font-normal text-gray-200 dark:text-gray-400">you want to cancel this order?</h3>
+              <button data-modal-hide="popup-modal" id="item-{{product.id}}" type="button" class="confirm-delete text-gray-200 bg-red-500 hover:bg-red-800 hover:text-white  focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                  Yes, I'm sure
+              </button>
+              <button data-modal-hide="popup-modal" type="button" class="cancel-delete  text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+    <div class="container-fluid" style="width: 100%;height:400px;background-color:white; margin-top:50px">
+        <div class="flex justify-around mt-20">
+      
+            <div> 
+                <h1>Our Store</h1>
+                <p class="mt-20">
+                    <div >ASSET Orchestra ,</div>
+                    <div class="mt-3"> Vetturoad , kaniyapuram </div>
+                    <div class="mt-3"> TRIVANDRUM </div>
+                    <div class="mt-3"> Kerala-695301</div>
+                </p>
+            </div>
+            <div class="vertical-line"></div>
+      
+            <div>
+                <h1>Link</h1>
+                <p class="mt-20">
+                    <div><a href="" >HOME</a> </div>
+      
+                   <div class="mt-3"> <a href="" class="mt-0">ABOUT</a></div>
+      
+                   <div class="mt-3"> <a href="" class="mt-10">CONTACT</a></div>
+      
+                    <div class="mt-3"><a href="" class="mt-10">SHOP</a></div>
+                </p>
+            </div>
+            <div class="vertical-line"></div>
+            <div>
+                <h1>Help</h1>
+                <p class="mt-20">
+                    <div><a href="">Careers</a></div>
+      
+                   <div class="mt-3"><a href="">Privacy Policy</a></div>
+      
+                   <div class="mt-3"><a href="">
+                    Terms and Conditions
+                   </a></div>
+      
+                    <div class="mt-3"><a href="">Support</a></div>
+                </p>
+            </div>
+      
+        </div>
+        
+      </div>
+      <p class="text-center">Copyright © 2023 | AudSculpt</p> 
+</body>
+
+<script>
+      function cancelOrder(event, id) {
+
+        var modal = document.getElementById('popup-modal');
+        modal.style.display = 'flex';
+
+        modal.querySelector('.confirm-delete').onclick = function () {
+          $.get('/cancel_order/', { 'pk': id }, function (data) {
+                if (data.status === 'ok') {    
+                  console.log(data);            
+                  window.location.reload()
+                }
+                modal.style.display = 'none';
+            });
+        };
+        modal.querySelector('.cancel-delete').onclick = function () {
+            modal.style.display = 'none';
+        };
+    }
+
+</script>
+</html>

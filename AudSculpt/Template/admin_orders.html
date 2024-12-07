@@ -1,0 +1,278 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+		
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+        body {
+            background-color: #0e1233;
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navi {
+            width: 20%;
+            background-color: #ffffff;
+            min-height: 150vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+        td{
+            background-color: #15193D;
+        }
+        
+
+        hr {
+            margin-top: -40%;
+            width: 90%;
+        }
+        
+        a{
+            font-size: 100%;
+            text-decoration: none;
+            color: black;
+
+        }
+        .na{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height:45px;
+           border-radius: 32px;
+           margin-top: 13%;
+           margin-left: 10%;
+           width: 80%;
+           
+        }
+        .na#five {
+            background-color: #0e1233;
+            color: #ffffff;
+            
+        }
+        .na#five a{
+            background-color: #0e1233;
+            color: #ffffff;
+        }
+        .heading{
+            color: #ffffff;
+            margin-left: 20%;
+        }
+        input::placeholder{
+            text-align: center;
+            color: #ffffff21;
+        }
+        .btn:hover{
+            cursor: pointer;
+        }
+        
+        
+        
+        
+        .title2{
+            margin-left: 10%;
+            margin-top: 2%;
+            width: 65vw;
+            background-color: #15193D;
+            height: 10vh;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+        table {
+            border-collapse: collapse;
+            width: 90%;
+        }
+    
+        th, td {
+            border: 5px solid #0e1233;
+            text-align: center;
+            padding: 8px;
+        }
+    
+        tr {
+            margin-bottom: 10px; 
+        }
+       
+       
+    </style>
+</head>
+{% tailwind_css %}
+
+
+<body>
+    
+    <div class="flex ">
+         <div class="navi">
+
+            <i><img class="logo w-full" src="/static/images/IMG_20231115_005000.png" alt=""></i>
+            <hr>
+            <div class="">
+
+                <div class="na" id='one'>
+                    <div>
+                        <img src="/static/images/home.png" class="w-6 lg:w-8 lg:w-10 mr-4 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_home"><b >Dashboard</b></a>
+                </div>
+
+                
+                <div class="na" id='three'>
+                    <div>
+                        <img src="/static/images/products.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_products"><b>Products</b></a>
+                </div>
+                <div class="na" id="four">
+                    <div>
+                        <img src="/static/images/users.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_users" ><b>Users</b></a>
+                </div>
+                <div class="na" id="five">
+                    <div>
+                        <img src="/static/images/orders.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_orders"><b>Orders</b></a>
+                </div>
+                <div class="na" id="six">
+                    <div>
+                        <img src="/static/images/category.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_category"><b>Category</b></a>
+                </div>
+                <div class="na" id="seven">
+                    <div>
+                        <img src="/static/images/coupons.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_coupons"><b>Coupons</b></a>
+                </div>
+                <div class="na" id="eight">
+                    <div>
+                        <img src="/static/images/discount.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_offers"><b>Offers</b></a>
+                </div>
+            
+            </div>
+            
+        </div>
+        <div class="flex flex-col w-full">
+            <div>
+                <h1 style="font-size: 40px;margin-top:5%; margin-left:5%;"><i class="text-white">Orders</i></h1> 
+            </div>
+            <div style="">
+                <h1 style="font-size:40px;" class="text-center text-white text-sm sm:text-lg md:text-xl" ><b>search order</b></h1>
+                <form method="POST">
+
+                {% csrf_token %}
+
+                    <div class="flex justify-center">
+                        <div>
+                            <input type="text" id="search-btn" name="search" placeholder="search here" style=" height:70px;border-radius:32px;margin-top:20px;font-size:20px;background-color:#0e1233;border:1px solid;border-color:#ffffff21;color:#ffffff;">
+
+                        </div>
+                        <div>
+                            <button style="background-color:#0e1233;border:none; width:30px;height:30px;margin-top:40px;margin-left:10px;" for="search-btn" type="submit" ><img src="/static/images/search-interface-symbol.png" alt=""></button>
+
+                        </div>
+                    </div>
+
+                </form>
+                <a href="{% url 'admin_orders' %}"><button class="bg-white px-3 py-2 hover:bg-black hover:text-white ml-7 rounded-lg">show all</button></a>
+            </div>
+                    
+
+
+
+
+            <div class="p-8 flex" >
+
+                <div class="container mx-auto">
+
+                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto items-center">
+                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                            <table class="min-w-full leading-normal">
+                                <thead>
+                                    <tr>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Username</th>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Product Name</th>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price</th>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Quantity</th>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Ordered Date</th>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Edit Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    {% for products in order.product.all %}
+                                        {% for variants in products.varients.all %}
+
+
+                                    <tr>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{order.user.username}}</td>
+
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{products.name|truncatewords:10}}</td>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{order.price}}</td>
+
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{order.quantity}}</td>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{order.date}}</td>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{order.status}}</td>
+
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {% if order.status != 'Cancelled' and order.status != 'Delivered' %}
+                                            <form method="post" action="{% url 'admin_orders' %}?pk={{ order.id }}">
+                                        {% csrf_token %}
+                                        <select id="orderStatus" name="orderStatus" style="background-color: #0e1233; border: none;" class="text-white">
+                                            <option value="processing">Processing</option>
+                                            <option value="shipping">Shipping</option>
+                                            <option value="Arrived">Arrived</option>
+                                            <option value="Out of delivery">Out of delivery</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                            <option value="Returning">Returning</option>
+                                            <option value="Returned">Returned</option>
+
+                                        </select>
+                                        <a href="">
+                                            <button class="text-sm px-5 text-black  mt-3 rounded-3xl bg-blue-500" type="submit">Update</button>
+                                        </a>
+                                        {% endif %}
+                                    </form>
+                                        </td>
+                                    </tr>
+                                    <!-- Repeat rows for more data -->
+                                        {% endfor %}
+
+                                        {% endfor %}
+
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

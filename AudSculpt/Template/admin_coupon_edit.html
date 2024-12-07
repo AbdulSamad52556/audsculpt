@@ -1,0 +1,92 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+{% tailwind_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+    body {
+        background-color: #0e1233;
+        padding: 0;
+        margin: 0;
+
+    }
+    table {
+        border-collapse: collapse;
+        width: 90%;
+    }
+
+    th, td {
+        border: 5px solid #0e1233;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr {
+        margin-bottom: 10px; 
+    }
+   
+</style>
+<body>
+
+    <div class="w-full justify-center items-center">
+
+        <div class="flex gap-40 p-10">
+            
+            <div class="bg-white p-5 w-2/4 flex rounded-xl items-center justify-center">
+
+                <div class=" p-8 rounded-xl bg-gray-100 shadow-2xl w-3/4 sm:w-96">
+                    <h1 class="text-2xl font-bold mb-6">Edit Coupon</h1>
+
+                    <form method="POST" class="space-y-4">
+
+                        {% csrf_token %}
+
+
+                        <div class="mb-4">
+                            <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
+                            <input type="text" value="{{coupon.code}}" name="code" id="code" class="mt-1 p-2 w-full bg-zinc-400 border-none rounded-md" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="discount_price" class="block text-sm font-medium text-gray-700">Discount Price</label>
+                            <input type="number" value="{{coupon.discount_price}}" name="discount_price" id="discount_price" class="mt-1 p-2 w-full border-none rounded-md" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="starting_date" class="block text-sm font-medium text-gray-700">Starting Date</label>
+                            <input type="date" required value="{{ coupon.starting_date|date:'Y-m-d' }}" name="starting_date" id="starting_date" class="mt-1 p-2 w-full border-none rounded-md" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="ending_date" class="block text-sm font-medium text-gray-700">Ending Date</label>
+                            <input type="date" required value="{{ coupon.ending_date|date:'Y-m-d' }}" name="ending_date" id="ending_date" class="mt-1 p-2 w-full border-none rounded-md" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="count" class="block text-sm font-medium text-gray-700">Count</label>
+                            <input type="number" value="{{coupon.count}}" name="count" id="count" class="mt-1 p-2 w-full border-none rounded-md" required>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-700 font-bold text-black hover:text-white p-2 rounded-md hover:bg-blue-600">Submit</button>
+
+                        
+                    </form>
+                    <div class="p-2">
+                        <a href="{% url 'admin_coupon_delete' pk=coupon.id %}">
+                            <button class="w-full bg-red-700 font-bold text-white hover:text-white p-2 rounded-md hover:bg-red-500">Delete</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

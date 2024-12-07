@@ -1,0 +1,159 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    
+    <style>
+        body{
+            background-color: #0e1233;
+            display: flex;
+            overflow: hidden;
+        }
+        .container{
+            background-image: url("{% static 'images/JBL Headphones.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+            width:49%;
+            height: 100vh;
+        }
+       
+        table {
+            border-collapse: separate;
+            border-spacing: 10px; 
+        }
+        
+    </style>
+
+
+
+
+</head>
+{% tailwind_css %}
+
+<body>
+    
+    <div class="container">
+        <a href="/home"><img class="w-16 m-5" src="/static/images/AudSculpt-removebg-preview.png" alt=""></a>
+        
+    </div>
+    <div class="container2 w-full h-full">
+        <div class="flex"> 
+            <div style="margin-left:30%;margin-top:3%;">
+                {% if image.image %}
+                    <img class="w-28 border" id='image' style="border-radius: 100px;" src="{{image.image.url}}" alt="">
+                {% endif %}
+
+            </div>
+            <div style="background-color:#0B0D26" class="h-10 m-16">
+                <h3 class="text-white p-3 text-center">{{user.first_name}} {{user.last_name}}</h3>
+            </div>
+            <div class="ml-40 mt-5" style="width:60px">
+                <button class="w-7" onclick="toggleDropdown()" type="button">
+                    <img src="/static/images/profile1.png" alt="">
+                </button>
+                <div class="hidden font-bold w-full" id="dropdownContent">
+                    <div class="mt-5 text-center  fixed" >
+                        <a href="/edit_profile" class="p-1 bg-white block text-sm text-gray-700 hover:text-gray-300">Edit Profile</a>
+                        <a href="/myorders" class="p-1 bg-blue-900 block text-sm text-white hover:text-gray-500">My Orders</a>
+                        <a href="my_wallet" class="p-1 bg-white block text-sm text-gray-700 hover:text-gray-300">My Wallet</a>
+                        <a href="/change_password" class="p-1 bg-blue-900 block text-sm text-white hover:text-gray-500">Password</a>
+                        {% if  ad %}
+                        <a href="/add_address" class="p-1 bg-white block text-sm text-gray-700 hover:text-gray-300">Add Address</a>
+                        {% endif %}
+                    </div>
+    
+                </div>
+            </div>
+
+        </div>
+        <div class="flex">
+
+            <div style="width:50%;background-color:#0e1233;" class="m-5">
+                <table style="width: 100%;"class="m-12">
+                    <tbody>
+                        <tr class="text-white "  style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">UserName</td>
+                            <td><h3 class="p-3 text-center">{{user.username}}</h3></td>
+                        </tr>
+
+                        <tr class="text-white "  style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">Age</td>
+                            <td><h3 class="p-3 text-center">{{user.age}}</h3></td>
+                        </tr>
+                    
+                        <tr class="text-white" style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">Gender</td>
+                            <td><h3 class="p-3 text-center">{{user.gender}}</h3></td>
+                        </tr>
+                        
+                        <tr class="text-white" style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">Email</td>
+                            <td><h3 class="p-3 text-center">{{user.email}}</h3></td>
+                        </tr>
+                    
+                        <tr class="text-white" style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">Phone</td>
+                            <td><h3 class="p-3 text-center">{{user.phone}}</h3></td>
+                        </tr>
+                    
+                        <tr class="text-white" style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">Alt Phone</td>
+                            <td><h3 class="p-3 text-center">{{user.altphone}}</h3></td>
+                        </tr>
+                
+                        <tr class="text-white" style="background-color: #0B0D26;">
+                            <td><h3 class="p-3 text-center">D O B</td>
+                            <td><h3 class="p-3 text-center">{{user.dob}}</h3></td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                
+            </div>
+
+
+            <div style="width:50%;background-color:#0e1233;" class="m-5 p-5">
+                <label class="text-white" for="">Address</label>
+                    {% for address in address %}
+                        <div style="width: 100%;"class="mt-2">
+                            <div>
+
+                        
+                                <div class="text-white p-3 h-full" style="background-color: #0B0D26">
+                                    {{address.houseno}} {{address.street}} {{address.landmark}} {{address.city}} {{address.pincode}}
+                                    <div class="flex justify-end">
+                                        <a href="{% url 'user_address' pk=address.id %}">
+                                        <img src="/static/images/edit.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+    
+            </div>
+
+            
+
+        </div>
+        
+    </div>
+
+    
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById('dropdownContent');
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+    
+</body>
+</html>

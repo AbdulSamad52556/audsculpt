@@ -1,0 +1,228 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
+
+
+</head>
+{% tailwind_css %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    body{
+        background-color: #D9D9D9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 80px;
+    }
+    .vertical-line {
+        border-left: 1px solid black; /* Adjust color and thickness as needed */
+        height: 250px; /* Adjust height as needed */
+    }
+</style>
+
+<body>
+    <div class="container-fluid" style="width: 100%;">
+        <div class="bg-white flex justify-between " style="width:100%;height:80px;">
+            <div class="mt-4">
+                <img src="/static/images/AudSculpt-removebg-preview.png" alt="">
+            </div>
+            <div class="flex mt-6 ml-28">
+                <a class="mr-10" href="/home">Home</a>
+                <a class="mr-10" href="">About Us</a>
+                <a class="mr-10" href="">Wishlist</a>
+                <a class="mr-10" href="/products">products</a>
+            </div>
+            <div class="h-7 flex mt-5 gap-10 ml-20">
+                <a href="" class="w-7"><img  src="/static/images/search.png" alt=""></a>
+                <a href="/cart" class="w-7"><img src="/static/images/cart1.png" alt=""></a>
+                <a href="/home" class="w-7"><img src="/static/images/profile.png" alt=""></a>
+            </div>
+
+        </div>
+        
+    </div>
+
+
+    <div style="width: 80%;background-color:white;height:100vh;">
+    <style>@import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);</style>
+        <div class="min-w-screen min-h-screen   items-center p-5 lg:p-10 overflow-hidden relative" style="background-color:#fff;">
+            <div class="w-full max-w-6xl mb-60 flex-col md-flex-row rounded bg-white shadow-2xl p-10 lg:p-10 mx-auto text-gray-800 relative md:text-left">
+                <div>
+                    <a href=""><img class="w-5 mb-60 ml-80" src="/static/images/love.png" alt=""></a>
+                </div>
+                <div class="md:flex items-center -mx-10 ">
+                    <div class="w-full md:w-1/2 px-10 md:mb-0" style="margin-top: -20%;">
+                        <div class="w-20">
+                        {% for images in img %}
+
+                            <a href="#" onclick="imagechange('{{images.image.url}}')" ><img class="thumbnail w-10" src="{{images.image.url}}" alt="" id="sideimg"></a>
+                        
+                        {% endfor %}
+                        </div>
+                        <div class="relative -mt-44 ml-20">
+                      
+                            <img src="{{img.0.image.url}}" id="main_img" class="w-60 relative z-10 rounded-3xl" alt="">
+                        </div>
+
+
+                    </div>
+                    
+                   
+                    <div class="w-full md:w-1/2 px-10">
+                        <div class="mb-10 -mt-60">
+                            <h1 class="font-bold uppercase text-l mb-5">{{product.name}}</h1>
+                        </div>
+                    
+
+                        {% if product.discount %}
+                                
+                            <div class="inline-block align-bottom mr-5">
+                                <div class="flex gap-5 mt-2">
+                                    <span class="text-lg leading-none font-bold align-baseline text-red-500"><s>₹ {{varients.price}}</s></span>
+                                    <p class="text-green-500 font-bold">{{product.discount}}% discount</p>
+                                </div>
+                                
+                       
+
+                            <div>
+                            <span class="font-bold text-3xl leading-none align-baseline">₹ {{varients.discount_price}}</span>
+                            </div>
+                        {% else %}
+                        <div class="inline-block align-bottom mr-5">
+                            <div class="flex gap-5 mt-2">
+                                <span class="font-bold text-3xl leading-none align-baseline ">₹ {{varients.price}}</span>
+                            </div>
+                        </div>
+
+                            
+                             {% endif %}
+
+                            <div class="flex">
+                                {% for colors in colors %}
+                                {% for variants in product.varients.all %}
+                                {% if colors.variation == variants.variation %}
+                                <a href="{% url 'item_page' pk=colors.product_id %}">
+                                    
+                                    <div class="w-5 rounded-3xl font-bold border-green-900 color-green text-center inline-block align-bottom mt-3 m-1 border" style="background-color: {{colors.variation}};color:{{colors.variation}}">-</div>
+                              
+                                </a>
+                                
+                                {% else %}
+                                <a href="{% url 'item_page' pk=colors.product_id %}">
+                                    <div class="w-5 rounded-3xl text-center inline-block align-bottom mt-3 m-1 border" style="background-color: {{colors.variation}}; color:{{colors.variation}}">O</div>
+
+                                </a>
+                                {% endif %}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+
+                            {% if varients.stock > 0 %}
+
+                            <div class="inline-block align-bottom mt-10">
+                                <button class="bg-yellow-400 opacity-100 hover:opacity-75 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold"><i class="mdi mdi-buy -ml-2 mr-2"></i> BUY NOW</button>
+                                
+                                {% if product.id not in cart %}
+                                    <a href="{% url 'add_to_cart2' %}?pk={{product.id}}"><button class="bg-blue-400 opacity-100 hover:opacity-75  text-blue-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold"><i class="mdi mdi-cart -ml-2 mr-2"></i>ADD TO CART</button></a>
+                                {% else %}
+                                    <a href="/cart"><button class="bg-blue-400 opacity-100 hover:opacity-75  text-blue-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold"><i class="mdi mdi-cart -ml-2 mr-2"></i>Go TO CART</button></a>
+                                {% endif %}
+                            </div>
+                            {% else %}
+
+                                <div >
+                                    <p class="text-red-500 text-xl font-bold p-10">Currently Item Not Available</p>
+                                </div>
+                            {% endif  %}
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 flex mt-40 gap-60 text-gray-500">
+                <h2 class="-mt-10">Highlights</h2>
+                <p class="-mt-20">{{product.highlights}}</p>
+            </div>
+            <div class="w-100 flex gap-60 mt-40 text-gray-500">
+                <h2 class="-mt-10">Description</h2>
+                <p class="-mt-20 mb-20">{{product.description}}</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function imagechange(image){
+            const img = document.getElementById('main_img')
+            img.src = image
+            $(img).ezPlus();
+        }
+        
+        $(document).ready(function() {
+            const main_img = document.getElementById('main_img')
+            $(main_img).ezPlus();
+        });
+    </script>
+    
+</body>
+<div class="container-fluid" style="width: 100%;height:400px;background-color:white; margin-top:450px">
+    <div class="flex justify-around mt-20">
+
+        <div> 
+            <h1>Our Store</h1>
+            <p class="mt-20">
+                <div >ASSET Orchestra ,</div>
+                <div class="mt-3"> Vetturoad , kaniyapuram </div>
+                <div class="mt-3"> TRIVANDRUM </div>
+                <div class="mt-3"> Kerala-695301</div>
+            </p>
+        </div>
+        <div class="vertical-line"></div>
+
+        <div>
+            <h1>Link</h1>
+            <p class="mt-20">
+                <div><a href="" >HOME</a> </div>
+
+               <div class="mt-3"> <a href="" class="mt-0">ABOUT</a></div>
+
+               <div class="mt-3"> <a href="" class="mt-10">CONTACT</a></div>
+
+                <div class="mt-3"><a href="" class="mt-10">SHOP</a></div>
+            </p>
+        </div>
+        <div class="vertical-line"></div>
+        <div>
+            <h1>Help</h1>
+            <p class="mt-20">
+                <div><a href="">Careers</a></div>
+
+               <div class="mt-3"><a href="">Privacy Policy</a></div>
+
+               <div class="mt-3"><a href="">
+                Terms and Conditions
+               </a></div>
+
+                <div class="mt-3"><a href="">Support</a></div>
+            </p>
+        </div>
+
+    </div>
+    
+</div>
+Copyright © 2023 | AudSculpt
+</html>

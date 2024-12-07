@@ -1,0 +1,464 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+		
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Cropper.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js" integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+        body {
+            background-color: #0e1233;
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navi {
+            width: 20%;
+            background-color: #ffffff;
+            min-height: 150vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        
+
+        hr {
+            margin-top: -40%;
+            width: 90%;
+        }
+        
+        a{
+            font-size: 100%;
+            text-decoration: none;
+            color: black;
+
+        }
+        .na{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height:45px;
+           border-radius: 32px;
+           margin-top: 13%;
+           margin-left: 10%;
+           width: 80%;
+           
+        }
+        .na#three {
+            background-color: #0e1233;
+            color: #ffffff;
+            
+        }
+        .na#three a{
+            background-color: #0e1233;
+            color: #ffffff;
+        }
+        .heading{
+            color: #ffffff;
+            margin-left: 20%;
+        }
+        input::placeholder{
+            text-align: center;
+            color: #000000;
+        }
+        .btn:hover{
+            cursor: pointer;
+        }
+   
+        .title2{
+            margin-left: 10%;
+            margin-top: 2%;
+            width: 65vw;
+            background-color: #15193D;
+            height: 10vh;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        th, td {
+            border: 5px solid #0e1233;
+            text-align: left;
+            padding: 8px;
+        }
+    
+        tr {
+            margin-bottom: 10px; 
+        }
+        
+       
+       
+    </style>
+{% tailwind_css %}
+</head>
+
+
+<body>
+    
+    
+<!-- Repeat the following block for each image -->
+<div class="modal fade fixed top-20 left-2/4 z-50  w-1/2 h-[300px] bg-white transform transform -translate-x-1/2 hidden" id="cropModal1" tabindex="-1" role="dialog" aria-labelledby="cropModalLabel1" aria-hidden="true">
+    <div class="modal-dialog p-5" role="document">
+        <div class="modal-content flex justify-center items-center flex-col">
+            <div class="modal-body w-2/5">
+                <img id="cropped-image" class="img-fluid" alt="Cropped Image 1">
+            </div>
+            <div class="modal-footer flex justify-center items-center gap-5 mt-5">
+                <button type="button" class="bg-gray-600 text-white py-1 px-3 rounded-md" id="crop-button-close">Close</button>
+                <button type="button" class="bg-gray-600 text-white py-1 px-3 rounded-md" id="crop-button">Crop and Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Repeat the above block for each image (change IDs accordingly) -->
+
+    
+
+    <div class="flex">
+        <div class="navi">
+
+            <i><img class="logo w-full" src="/static/images/IMG_20231115_005000.png" alt=""></i>
+            <hr>
+            <div>
+
+                <div class="na" id='one'>
+                    <div>
+                        <img src="/static/images/home.png" class="w-6 lg:w-8 lg:w-10 mr-4 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_home"><b >Dashboard</b></a>
+                </div>
+
+                <div class="na" id='three'>
+                    <div>
+                        <img src="/static/images/products.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_products"><b>Products</b></a>
+                </div>
+                <div class="na" id="four">
+                    <div>
+                        <img src="/static/images/users.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_users" ><b>Users</b></a>
+                </div>
+                <div class="na" id="five">
+                    <div>
+                        <img src="/static/images/orders.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_orders"><b>Orders</b></a>
+                </div>
+                <div class="na" id="six">
+                    <div>
+                        <img src="/static/images/category.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_category"><b>Category</b></a>
+                </div>
+                <div class="na" id="seven">
+                    <div>
+                        <img src="/static/images/coupons.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_coupons"><b>Coupons</b></a>
+                </div>
+                <div class="na" id="eight">
+                    <div>
+                        <img src="/static/images/discount.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_offers"><b>Offers</b></a>
+                </div>
+            
+            </div>
+            
+        </div>
+
+        <div class="w-full" >
+            
+            <div>
+                
+
+                <div class="container flex justify-center mx-auto p-8 w-3/4 ">                
+                    <form method="post" enctype="multipart/form-data" class="bg-white shadow-md w-3/4  rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                        {% csrf_token %}
+                        <h2 class="text-center font-bold text-2xl">Add Product</h2>
+
+                        <div class="shadow-md p-4">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <input class="mt-4 p-2 w-full bg-gray-200 text-black border" placeholder="Name" type="text" name="name" required>
+                                
+                                <input class="mt-4 p-2 w-full bg-gray-200 text-black border" placeholder="Price" type="text" name="price" min="0" step="1" required>
+
+                                <input type="number" id="stock" name="stock" id="stock" placeholder="Stock" class="mt-4 p-2 w-full bg-gray-200 text-black border" required>
+                                <input class="mt-4 p-2 w-full bg-gray-200 text-black border" placeholder="Product Code (If you have)" type="text" name="code" id="code">
+
+                                <input type="text" id="brand" name="brand" placeholder="Brand" class="mt-4 p-2 w-full bg-gray-200 text-black border" required>
+                                
+                                
+                                <label class="mt-4 block text-sm font-medium text-gray-700">Color</label>
+                                <input class="mt-1 p-2 w-full bg-gray-200 text-black border" type="color" name="color" value="#ffff" required>
+                                
+
+                            </div>
+                            <div>
+                                <div id="image-inputs">
+                                    <div class="relative">
+                                        <input class="mt-4 p-2 w-4/5 bg-gray-200 text-black border" type="file" id="image1" accept="image/*" name="image1" required>
+                                        <button type="button" class="absolute top-5 right-0 bg-gray-600 text-white p-1 rounded-md" onclick="openCropModal(1)">Crop</button>
+                                        <img id="cropped-image1" class="mt-4 p-2 w-full bg-gray-200 text-black border-none hidden" alt="Cropped Image 1">
+                                        
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="button" class="bg-black mt-2 text-sm text-white p-2 rounded-lg" id="add-image">Add Image</button>
+                                </div>                              
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <textarea class="mt-4 p-2 w-full bg-gray-200 text-black border-none" name="description" rows="4" placeholder="Description" required></textarea>
+                            <textarea class="mt-4 p-2 w-full bg-gray-200 text-black border-none" name="highlights" rows="4" placeholder="Highlights" required></textarea>
+                        </div>
+                        <button class="mt-8 w-full py-2 bg-black text-white rounded-lg" type="submit"><b>Add Product</b></button>
+                        
+                        
+                        </div>
+                    </form>
+                    
+
+                </div>
+            </div>
+
+
+
+
+                    <div>
+                        <h1 style=" font-size:40px;" class="text-white text-center text-sm sm:text-lg md:text-xl" ><b>Your Products</b></h1>
+                        <form class="m-5" method='POST'>
+                            {% csrf_token %}
+                            <div class="flex justify-center">
+                                <div>
+                                    <input type="text" id="search-btn" name="search" placeholder="search here" style=" height:70px;border-radius:32px;margin-top:20px;font-size:20px;background-color:#0e1233;border:1px solid;border-color:#ffffff21;color:#ffffff;">
+
+                                </div>
+                                <div>
+                                    <button style="background-color:#0e1233;border:none; width:30px;height:30px;margin-top:40px;margin-left:10px;" for="search-btn" type="submit" ><img src="/static/images/search-interface-symbol.png" alt=""></button>
+
+                                </div>
+                            </div>
+
+                        </form>
+                     
+                    </div>
+                    
+
+            <div>
+                <link
+	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+	rel="stylesheet">
+
+
+
+
+<div class="p-8 ">
+
+  <div class="container mx-auto overflow-x-scroll bg-white p-8 rounded-lg shadow">
+
+    <!-- Table -->
+    <table class="w-full  border-collapse border border-gray-300">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b">ID</th>
+          <th class="py-2 px-4 border-b">Name</th>
+          <th class="py-2 px-4 border-b">Status</th>
+          <th class="py-2 px-4 border-b">Price</th>
+          <th class="py-2 px-4 border-b">Stock</th>
+          <th class="py-2 px-4 border-b">Description</th>
+          <th class="py-2 px-4 border-b">Highlights</th>
+          <th class="py-2 px-4 border-b">Code</th>
+          <th class="py-2 px-4 border-b">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        {% for variants in product.varients.all %}
+
+        <tr>
+          <td class="py-2 px-4 border-b">{{product.id}}</td>
+          <td class="py-2 px-4 border-b">{{product.name|truncatewords:10}}</td>
+          <td class="py-2 px-4 border-b"><span class="bg-green-400 text-gray-50 rounded-md px-2">available</span></td>
+
+          <td class="py-2 px-4 border-b">{{variants.price}}</td>
+          <td class="py-2 px-4 border-b">{{variants.stock}}</td>
+
+          <td class="py-2 px-4 border-b">{{product.description|truncatewords:10}}</td>
+          <td class="py-2 px-4 border-b">{{product.highlights|truncatewords:10}}</td>
+          <td class="py-2 px-4 border-b">{{product.code}}</td>
+          <td class="py-2 px-4 border-b">
+            <a href="{% url 'product_edit' pk=product.id %}"><button class="bg-blue-500 text-white py-1 px-2 rounded">Edit</button></a>
+          </td>
+        </tr>
+        {% endfor %}
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+
+
+<style>
+	.table {
+		border-spacing: 0 15px;
+	}
+
+	i {
+		font-size: 1rem !important;
+	}
+
+	.table tr {
+		border-radius: 20px;
+	}
+
+	tr td:nth-child(n+5),
+	tr th:nth-child(n+5) {
+		border-radius: 0 .625rem .625rem 0;
+	}
+
+	tr td:nth-child(1),
+	tr th:nth-child(1) {
+		border-radius: .625rem 0 0 .625rem;
+	}
+</style>
+            </div>
+
+        </div>
+     
+    </div>
+
+    <script>
+        function openCropModal(imageNumber) {
+            const inputElement = document.getElementById(`image${imageNumber}`);
+            console.log(inputElement)
+            const imageElement = document.getElementById(`cropped-image`);
+            const model  = document.getElementById('cropModal1')
+            model.classList.remove('hidden')
+            const cropper = new Cropper(imageElement, {
+                aspectRatio: 5/6,
+                viewMode: 2,
+                minCanvasHeight: 200,
+                minCanvasWidth: 200,
+                minCropBoxHeight: 200,
+                minCropBoxWidth: 200,
+                minContainerHeight: 200,
+                minContainerWidth: 200
+            });
+
+                const file = inputElement.files[0];
+                console.log(file)
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+                    imageElement.src = event.target.result;
+                    cropper.replace(event.target.result);
+                };
+
+                reader.readAsDataURL(file);
+
+                // Show the crop modal
+
+            // Add an event listener to the crop button for this specific image
+            document.getElementById(`crop-button`).addEventListener('click', function () {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    const new_file = new File([blob], `crop-${inputElement.files[0].name}`, { type: 'image/jpeg' });
+        
+                    // Now let's create a DataTransfer to get a FileList
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(new_file);
+        
+                    // Assign the new FileList to the input element
+                    inputElement.files = dataTransfer.files;
+        
+                    
+                    
+                }, 'image/jpeg');
+
+                if(cropper){
+                    cropper.destroy()
+                    }
+
+
+                model.classList.add('hidden')
+                imageElement.src = ''
+            });
+
+            document.getElementById(`crop-button-close`).addEventListener('click', function () {
+
+                if(cropper){
+                    cropper.destroy()
+                    model.classList.add('hidden')
+                    imageElement.src = ''
+                }
+                    
+            })
+        }
+            
+    </script>
+    <script>
+       
+
+        $(document).ready(function() {
+            var formCount = 1; // Initialize form count
+        
+            $("#add-image").click(function() {
+                formCount += 1;
+        
+                // Create new input field
+                var newInput = $('<input type="file" class="mt-4 p-2 w-4/5 bg-gray-200 text-black border-none" id="image' + formCount + '" accept="image/*" name="image1" required>');
+                newInput.on('change', function() { openCropModal(formCount); });
+        
+                // Create new crop button
+                var newButton = $('<button type="button" class="absolute top-5 right-0 bg-gray-600 text-white p-1 rounded-md">Crop</button>');
+                newButton.on('click', function() { openCropModal(formCount); });
+        
+                // Create new div to hold the input field and crop button
+                var newDiv = $('<div class="relative"></div>');
+                newDiv.append(newInput);
+                newDiv.append(newButton);
+        
+                // Append the new div to the image inputs
+                $("#image-inputs").append(newDiv);
+            });
+        });
+        
+    </script>
+    
+    
+  
+</body>
+
+</html>

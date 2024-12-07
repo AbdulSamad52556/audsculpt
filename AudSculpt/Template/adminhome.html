@@ -1,0 +1,499 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+        body {
+            background-color: #0e1233;
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navi {
+            width: 20%;
+            background-color: #ffffff;
+            min-height: 150vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        td {
+            background-color: #15193D;
+        }
+
+
+        hr {
+            margin-top: -40%;
+            width: 90%;
+        }
+
+        a {
+            font-size: 100%;
+            text-decoration: none;
+            color: black;
+
+        }
+
+        .na {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 45px;
+            border-radius: 32px;
+            margin-top: 13%;
+            margin-left: 10%;
+            width: 80%;
+
+        }
+
+        .na#one {
+            background-color: #0e1233;
+            color: #ffffff;
+
+        }
+
+        .na#one a {
+            background-color: #0e1233;
+            color: #ffffff;
+        }
+
+        .heading {
+            color: #ffffff;
+            margin-left: 20%;
+        }
+
+        input::placeholder {
+            text-align: center;
+            color: #ffffff21;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+        }
+
+        #dailyOrdersChart {
+        
+            background-color: #ffff;
+            padding:10px;
+        }
+        #OrdersChart_Y{
+            background-image: url("{% static 'images/img4.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+
+        .title2 {
+            margin-left: 10%;
+            margin-top: 2%;
+            width: 65vw;
+            background-color: #15193D;
+            height: 10vh;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        th,
+        td {
+            border: 5px solid #0e1233;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+        }
+       
+    </style>
+</head>
+{% tailwind_css %}
+
+
+<body>
+
+
+
+
+
+    <div class="flex">
+        <div class="navi">
+
+            <i><img class="logo w-full" src="/static/images/IMG_20231115_005000.png" alt=""></i>
+            <hr>
+            <div class="">
+
+                <div class="na" id='one'>
+                    <div>
+                        <img src="/static/images/home.png" class="w-6 lg:w-8 lg:w-10 mr-4 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_home"><b >Dashboard</b></a>
+                </div>
+
+               
+                <div class="na" id='three'>
+                    <div>
+                        <img src="/static/images/products.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_products"><b>Products</b></a>
+                </div>
+                <div class="na" id="four">
+                    <div>
+                        <img src="/static/images/users.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_users" ><b>Users</b></a>
+                </div>
+                <div class="na" id="five">
+                    <div>
+                        <img src="/static/images/orders.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_orders"><b>Orders</b></a>
+                </div>
+                <div class="na" id="six">
+                    <div>
+                        <img src="/static/images/category.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_category"><b>Category</b></a>
+                </div>
+                <div class="na" id="seven">
+                    <div>
+                        <img src="/static/images/coupons.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_coupons"><b>Coupons</b></a>
+                </div>
+                <div class="na" id="eight">
+                    <div>
+                        <img src="/static/images/discount.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_offers"><b>Offers</b></a>
+                </div>
+            
+            </div>
+            
+        </div>
+
+        <div class="w-full">
+
+            <div class="flex flex-col justify-center items-center gap-10 p-10">
+                <div class="flex gap-96">
+                    <h1 style="font-size: 40px;"><i class="text-white">Dashboard</i></h1>
+                    
+                    <div class="flex -mr-96 items-end">
+               
+                        <div class="" style="width:60px">
+                            <button class="w-7" onclick="toggleDropdown2()" type="button">
+                                <img src="/static/images/profile1.png" alt="">
+                            </button>
+                            <div class="hidden fixed font-bold w-full" id="dropdownContent2">
+                                <div class="mt-5 text-left " >
+                                    {% if not ad %}
+                                    <a href="#" onclick="logoutuser(event, {{ user.id }})" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="block text-l text-gray-700 hover:text-gray-500">LogOut</a>
+                                    {% endif %}
+                                </div>
+                
+                            </div>
+                        </div>
+                    </div>
+
+
+                
+                
+                    
+            </div>
+
+
+
+            <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm logout</h3>
+                    <button data-modal-hide="popup-modal" id="item-{{user.id}}" type="button" class="confirm-delete text-gray-500 bg-red-600 hover:bg-red-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                        Yes, I'm sure
+                    </button>
+                    <button data-modal-hide="popup-modal" type="button" class="cancel-delete  text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                
+                
+
+                    <div class="container flex justify-center mx-auto mt-8">
+                        <div class="bg-white p-8 items-center  rounded-lg shadow-md">
+                            <form class="flex justify-center font-bold">
+                                {% csrf_token %}
+                
+                                <div class="mb-4">
+                                    <label for="starting_date" class="text-gray-700">Starting Date</label>
+                                    <input type="date" id="starting_date" name="starting_date" class="block w-full mt-1 p-2 border rounded-md">
+                                </div>
+                
+                                <div class="mb-4 ml-4">
+                                    <label for="ending_date" class="text-gray-700">Ending Date</label>
+                                    <input type="date" id="ending_date" name="ending_date" class="block w-full mt-1 p-2 border rounded-md">
+                                </div>
+                
+                                <div class="ml-4">
+                                    <div class="relative inline-block text-left">
+                                        <button type="button" onclick="toggleDropdown()" class="inline-flex items-center justify-center w-32 px-4 py-2 text-sm font-bold text-white bg-black border border-transparent rounded-md hover:bg-white hover:text-black focus:outline-none focus:ring">
+                                            Select File
+                                        </button>
+                                        <div id="dropdownContent" class="hidden absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded-md shadow-md">
+                                            <a id="pdfLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick ="generatePdfLink()">PDF</a>
+                                            <a  id="excelLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="generateExcelLink()">EXCEL</a>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </form>
+                        </div>
+                    </div>
+                
+
+                <div class="w-4/5 justify-center items-center">
+                    <canvas id="dailyOrdersChart" class="rounded-2xl" width="500" height="200"></canvas>
+    
+                </div>
+                <!-- <canvas id="dailyOrdersChart2" class="rounded-2xl" width="500" height="200"></canvas> -->
+                <canvas id="OrdersChart_Y" class="rounded-2xl" width="300" height="100"></canvas>
+
+
+            </div>
+
+        
+
+        </div>
+        <script>
+        function toggleDropdown2() {
+            var dropdown = document.getElementById('dropdownContent2');
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+        <script>
+        document.getElementById('starting_date').setAttribute('max', getCurrentDate());
+    document.getElementById('ending_date').setAttribute('max', getCurrentDate());
+
+    function getCurrentDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function toggleDropdown() {
+        var dropdownContent = document.getElementById("dropdownContent");
+        dropdownContent.classList.toggle("hidden");
+    }
+
+    function generateExcelLink() {
+        const startingDate = document.getElementById('starting_date').value;
+        const endingDate = document.getElementById('ending_date').value;
+        const excelLink = document.getElementById('excelLink');
+
+        if (startingDate && endingDate) {
+            if (new Date(startingDate) < new Date(endingDate)) {
+
+            excelLink.href = "{% url 'asr_excel' %}?start=" + startingDate + "&end=" + endingDate;
+            }
+            else{
+                alert('Starting date must be less than ending date.');
+            }
+
+        }
+        else {
+            // Show an alert if either start or end date is missing
+            alert('Please provide both start and end dates.');
+        }
+
+        // Append start and end dates as query parameters to the Excel link
+    }
+    function generatePdfLink() {
+        const startingDate = document.getElementById('starting_date').value;
+        const endingDate = document.getElementById('ending_date').value;
+        const pdfLink = document.getElementById('pdfLink');
+        if (startingDate && endingDate) {
+            if (new Date(startingDate) < new Date(endingDate)) {
+
+             pdfLink.href = "{% url 'asr_pdf' %}?start=" + startingDate + "&end=" + endingDate;
+            }
+            else{
+                alert('Starting date must be less than ending date.');
+            }
+
+        }
+        else {
+            // Show an alert if either start or end date is missing
+            alert('Please provide both start and end dates.');
+        }
+        // Append start and end dates as query parameters to the pdf link
+       
+    }
+        
+    </script>
+
+    
+</body>
+<script>
+    function logoutuser(event, id) {
+        event.preventDefault();
+        event.stopPropagation();
+    
+        var modal = document.getElementById('popup-modal');
+        modal.style.display = 'flex';
+    
+        modal.querySelector('.confirm-delete').onclick = function () {
+            $.get('/signout/', { 'id': id }, function (data) {
+                if (data.status === 'ok') {
+                    window.location.href = '';
+                    document.getElementById('item-' + id).remove();
+                }
+                modal.style.display = 'none';
+            });
+        };
+        modal.querySelector('.cancel-delete').onclick = function () {
+            modal.style.display = 'none';
+        };
+    }
+        
+        
+    </script>
+
+
+
+<script>
+    function toggleDropdown() {
+        var dropdown = document.getElementById('dropdownContent');
+        dropdown.classList.toggle('hidden');
+    }
+</script>
+
+<script>
+    // Define config_Y before using it
+    console.log({{monthly_orders_count|safe}})
+  
+    // Now you can use config_Y
+    const data_Y = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug','Sep',"Oct",'Nov','Dec'],
+      datasets: [
+        {
+          label: 'Dataset',
+          data: {{monthly_orders_count|safe}},
+          backgroundColor: 'rgba(247, 109, 10,1)',
+          pointStyle: 'circle',
+          pointRadius: 10,
+          pointHoverRadius: 15
+        }
+      ]
+    };
+
+    const config_Y = {
+        type: 'line',
+        data: data_Y,
+        options: {
+            scales: {
+                y: {
+                  min: 0,
+                }
+              },
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+            }
+          }
+        }
+      };
+  
+    var ctx_Y = document.getElementById('OrdersChart_Y').getContext('2d');
+    var OrdersChart_Y = new Chart(ctx_Y, config_Y);
+  </script>
+  
+
+
+
+<script>
+    const DATA_COUNT = 7;
+const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
+
+const today = new Date();
+const formattedDate = today.toLocaleDateString(); 
+
+const labels = [formattedDate];
+const data = {
+    labels: labels,
+    datasets: [
+        {
+            label: 'ORDER PLACED',
+            data: labels.map(() => {
+                return [parseInt("{{OCT}}"),0];
+            }),
+            backgroundColor: 'red',
+        },
+        {
+            label: 'ORDER CANCELLED',
+            data: labels.map(() => {
+                return [-parseInt("{{COCT}}"),0];
+            }),
+            backgroundColor: 'blue',
+        },
+    ]
+};
+
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: "TODAY'S ORDER STATUS"
+            }
+        }
+    }
+};
+
+var ctx = document.getElementById('dailyOrdersChart').getContext('2d');
+var dailyOrdersChart = new Chart(ctx, config);
+
+
+
+</script>
+
+
+
+</html>

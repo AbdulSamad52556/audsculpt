@@ -1,0 +1,252 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+		
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+        body {
+            background-color: #0e1233;
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navi {
+            width: 20%;
+            background-color: #ffffff;
+            min-height: 150vh;
+            display: flex;
+            justify-items:start;
+            flex-direction: column;
+
+        }
+        td{
+            background-color: #15193D;
+        }
+        
+
+        hr {
+            margin-top: -40%;
+            width: 90%;
+        }
+        
+        a{
+            font-size: 100%;
+            text-decoration: none;
+            color: black;
+
+        }
+        .na{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height:45px;
+           border-radius: 32px;
+           margin-top: 13%;
+           margin-left: 10%;
+           width: 80%;
+           
+        }
+        .na#eight {
+            background-color: #0e1233;
+            color: #ffffff;
+            
+        }
+        .na#eight a{
+            background-color: #0e1233;
+            color: #ffffff;
+        }
+        .heading{
+            color: #ffffff;
+            margin-left: 20%;
+        }
+        input::placeholder{
+            text-align: center;
+            color: #ffffff21;
+        }
+        .btn:hover{
+            cursor: pointer;
+        }
+        
+        
+        
+        
+        .title2{
+            margin-left: 10%;
+            margin-top: 2%;
+            width: 65vw;
+            background-color: #15193D;
+            height: 10vh;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+       
+    </style>
+</head>
+{% tailwind_css %}
+
+
+<body>
+    
+    <div class="flex">
+        <div class="navi">
+
+            <i><img class="logo w-full" src="/static/images/IMG_20231115_005000.png" alt=""></i>
+            <hr>
+            <div class="">
+
+                <div class="na" id='one'>
+                    <div>
+                        <img src="/static/images/home.png" class="w-6 lg:w-8 lg:w-10 mr-4 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_home"><b >Dashboard</b></a>
+                </div>
+
+                
+                <div class="na" id='three'>
+                    <div>
+                        <img src="/static/images/products.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_products"><b>Products</b></a>
+                </div>
+                <div class="na" id="four">
+                    <div>
+                        <img src="/static/images/users.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_users" ><b>Users</b></a>
+                </div>
+                <div class="na" id="five">
+                    <div>
+                        <img src="/static/images/orders.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_orders"><b>Orders</b></a>
+                </div>
+                <div class="na" id="six">
+                    <div>
+                        <img src="/static/images/category.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_category"><b>Category</b></a>
+                </div>
+                <div class="na" id="seven">
+                    <div>
+                        <img src="/static/images/coupons.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_coupons"><b>Coupons</b></a>
+                </div>
+                <div class="na" id="eight">
+                    <div>
+                        <img src="/static/images/discount.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_offers"><b>Offers</b></a>
+                </div>
+            
+            </div>
+            
+        </div>
+
+        <div class="w-full">
+            
+            <div class="flex justify-between p-10">
+                <div>
+                    <h1 style="font-size: 40px;margin-top:5%; margin-left:5%;"><i class="text-white">Offers</i></h1> 
+                </div>
+            </div>
+
+            <div class="flex sm:flex-row justify-around">
+                <div class="dropdown mb-4 sm:mb-0">
+        <button class="bg-blue-500 text-white py-2 px-6 sm:px-12 rounded-lg">
+            Categories
+        </button>
+        <div class="dropdown-content">
+            <table class="mt-2">
+                <tbody style="background-color: #15193D;">
+                    <tr class="flex flex-col sm:flex-row px-2 sm:px-20">
+                        {% for cate in categories %}
+                            <td style="background-color: #0e1233;" class="text-white">
+                                <a href="{% url 'admin_offerpage' %}?pk={{cate.id}}">
+                                    {{cate.name}} <img class="w-20" src="{{cate.image.url}}" alt="">
+                                </a>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="bg-green-500 text-white py-2 px-6 sm:px-12 rounded-lg">
+            Products
+        </button>
+        <div class="dropdown-content">
+            <table class="mt-2">
+                <tbody>
+                    {% for product in products %}
+                        {% for img in product.images.all %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <td class="text-white">
+                                        <a href="{% url 'admin_offerpage' %}?pk={{product.id}}">
+                                            {{product.name}} <img class="w-20" src="{{img.image.url}}" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    
+
+    </div>
+</body>
+
+</html>

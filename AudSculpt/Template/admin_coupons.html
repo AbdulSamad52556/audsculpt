@@ -1,0 +1,270 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+		
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+        body {
+            background-color: #0e1233;
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .navi {
+            width: 20%;
+            background-color: #ffffff;
+            min-height: 150vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+        td{
+            background-color: #15193D;
+        }
+        
+
+        hr {
+            margin-top: -40%;
+            width: 90%;
+        }
+        
+        a{
+            font-size: 100%;
+            text-decoration: none;
+            color: black;
+
+        }
+        .na{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height:45px;
+           border-radius: 32px;
+           margin-top: 13%;
+           margin-left: 10%;
+           width: 80%;
+           
+        }
+        .na#seven {
+            background-color: #0e1233;
+            color: #ffffff;
+            
+        }
+        .na#seven a{
+            background-color: #0e1233;
+            color: #ffffff;
+        }
+        .heading{
+            color: #ffffff;
+            margin-left: 20%;
+        }
+        input::placeholder{
+            text-align: center;
+            color: #ffffff21;
+        }
+        .btn:hover{
+            cursor: pointer;
+        }
+        
+        
+        
+        
+        .title2{
+            margin-left: 10%;
+            margin-top: 2%;
+            width: 65vw;
+            background-color: #15193D;
+            height: 10vh;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+        table {
+            border-collapse: collapse;
+            width: 90%;
+        }
+    
+        th, td {
+            border: 5px solid #0e1233;
+            text-align: left;
+            padding: 8px;
+        }
+    
+        tr {
+            margin-bottom: 10px; 
+        }
+       
+       
+    </style>
+</head>
+{% tailwind_css %}
+
+
+<body>
+    
+    
+
+    
+
+    <div class="flex">
+         <div class="navi">
+
+            <i><img class="logo w-full" src="/static/images/IMG_20231115_005000.png" alt=""></i>
+            <hr>
+            <div class="">
+
+                <div class="na" id='one'>
+                    <div>
+                        <img src="/static/images/home.png" class="w-6 lg:w-8 lg:w-10 mr-4 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_home"><b >Dashboard</b></a>
+                </div>
+
+               
+                <div class="na" id='three'>
+                    <div>
+                        <img src="/static/images/products.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_products"><b>Products</b></a>
+                </div>
+                <div class="na" id="four">
+                    <div>
+                        <img src="/static/images/users.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_users" ><b>Users</b></a>
+                </div>
+                <div class="na" id="five">
+                    <div>
+                        <img src="/static/images/orders.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_orders"><b>Orders</b></a>
+                </div>
+                <div class="na" id="six">
+                    <div>
+                        <img src="/static/images/category.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="admin_category"><b>Category</b></a>
+                </div>
+                <div class="na" id="seven">
+                    <div>
+                        <img src="/static/images/coupons.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_coupons"><b>Coupons</b></a>
+                </div>
+                <div class="na" id="eight">
+                    <div>
+                        <img src="/static/images/discount.png" class="w-6 lg:w-8 lg:-ml-7 md:mr-6 lg:mr-8">
+                    </div>
+                    <a href="/admin_offers"><b>Offers</b></a>
+                </div>
+            
+            </div>
+            
+        </div>
+
+        <div class="w-full justify-center items-center">
+            
+            <div class="flex justify-center gap-40 p-10">
+                
+                <div class="bg-gray-100  flex rounded-xl items-center justify-center">
+
+                    <div class=" p-8 rounded-xl shadow-xl w-3/4 sm:w-96">
+                        <h1 class="text-2xl font-bold mb-6">Add Coupons</h1>
+
+                        <form method="POST" class="space-y-4">
+
+                            {% csrf_token %}
+
+                            <div class="mb-4">
+                                <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
+                                <input type="text" name="code" id="code" class="mt-1 p-2 w-full bg-zinc-400 border-none rounded-md" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="discount_price" class="block text-sm font-medium text-gray-700">Discount Price</label>
+                                <input type="number" name="discount_price" id="discount_price" class="mt-1 p-2 w-full border-none rounded-md" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="starting_date" class="block text-sm font-medium text-gray-700">Starting Date</label>
+                                <input type="date" name="starting_date" id="starting_date" class="mt-1 p-2 w-full border-none rounded-md" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="ending_date" class="block text-sm font-medium text-gray-700">Ending Date</label>
+                                <input type="date" name="ending_date" id="ending_date" class="mt-1 p-2 w-full border-none rounded-md" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="count" class="block text-sm font-medium text-gray-700">Count</label>
+                                <input type="number" name="count" id="count" class="mt-1 p-2 w-full border-none rounded-md" required>
+                            </div>
+
+                            <button type="submit" class="w-full bg-blue-700 font-bold text-black hover:text-white p-2 rounded-md hover:bg-blue-600">Submit</button>
+                            
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex justify-center items-center">
+
+                <div class="bg-white p-8 overflow-x-scroll rounded-lg shadow-2xl sm:w-96" style="width:80%">
+                    <h1 class="text-2xl font-bold mb-6">Discount Table</h1>
+    
+                    <table class="w-full border">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b">Code</th>
+                                <th class="py-2 px-4 border-b">Discount Price</th>
+                                <th class="py-2 px-4 border-b">Starting Date</th>
+                                <th class="py-2 px-4 border-b">Ending Date</th>
+                                <th class="py-2 px-4 border-b">Count</th>
+                                <th class="py-2 px-4 border-b">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-white">
+                            {% if coupons %}
+                                {% for coupon in coupons %}
+                                <tr>
+                                    <td class="py-2 px-4 border-b">{{coupon.code}}</td>
+                                    <td class="py-2 px-4 border-b">{{coupon.discount_price}}</td>
+                                    <td class="py-2 px-4 border-b">{{coupon.starting_date}}</td>
+                                    <td class="py-2 px-4 border-b">{{coupon.ending_date}}</td>
+                                    <td class="py-2 px-4 border-b">{{coupon.count}}</td>
+                                    <td class="py-2 px-4 border-b"><a href="{% url 'admin_coupon_edit' pk=coupon.id %}"><img src="/static/images/edit.png" alt=""></a></td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+            
+
+        </div>
+ 
+    </div>
+
+        
+    
+</body>
+
+</html>     

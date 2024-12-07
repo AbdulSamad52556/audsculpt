@@ -1,0 +1,80 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+{% tailwind_css %}
+
+<body>
+    <div class="container-fluid" style="width:100%;">
+        <div class="bg-white flex justify-between h-full w-full">
+            <div class="mt-4">
+                <img src="/static/images/AudSculpt-removebg-preview.png" alt="">
+            </div>
+            <div class="flex items-center space-x-4 lg:space-x-10 ml-5 lg:ml-0">
+                <a class="text-gray-700 hover:text-gray-900" href="/home">Home</a>
+                <a class="text-gray-700 hover:text-gray-900" href="">AboutUs</a>
+                <a class="text-gray-700 hover:text-gray-900" href="">Wishlist</a>
+                <a class="text-gray-700 hover:text-gray-900" href="/products">products</a>
+            </div>
+            <div class="flex items-center gap-4 ml-5 mr-10 gap-10 lg:ml-0">
+                <a href="/cart" class="w-7"><img src="/static/images/cart1.png" alt=""></a>
+                <a href="/home" class="w-7"><img src="/static/images/profile.png" alt=""></a>
+            </div>
+
+        </div>
+
+
+
+ <div class="container mx-auto p-4" style="background-color:#0E1233;">
+    <h1 class="text-2xl font-bold mb-4 text-white text-center p-5">Wallet Details</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 p-10 gap-4 text-white">
+      <div>
+        <h2 class="text-xl font-semibold mb-2 py-2">User Information</h2>
+        <p>Name: {{ user.get_full_name }}</p>
+        <p>Email: {{ user.email }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2 py-2">Wallet Information</h2>
+        <p>Balance: ₹ {% if wallet %} {{ wallet.amount }} {% else %} 0 {% endif %}</p>
+        <p>Payment Type: {{ wallet.payment_type }}</p>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-semibold my-4 text-white">Wallet History</h2>
+
+    <table class="min-w-full bg-white border border-gray-300">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b">Date</th>
+          <th class="py-2 px-4 border-b">Amount</th>
+          <th class="py-2 px-4 border-b">Transaction Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in history %}
+          <tr>
+            <td class="py-2 px-4 border-b text-center">{{ entry.date }}</td>
+            <td class="py-2 px-4 border-b text-center">₹ {{ entry.amount }}</td>
+            <td class="py-2 px-4 border-b text-center">{{ entry.get_transaction_type_display }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+        </div>
+        </body>
+        

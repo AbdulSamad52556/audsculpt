@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Product Form</title>
+</head>
+
+<body class="bg-gray-100 p-4">
+    {% if obj %}
+
+        <div class="max-w-md mx-auto bg-white p-8 rounded-md shadow-md">
+            <h2 class="text-2xl font-semibold mb-6">Add Discount</h2>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-600 text-sm font-medium mb-2">Category Name</label>
+                    <input type="text" class="w-full px-3 py-2 border-none rounded-md focus:outline-none focus:border-blue-500" placeholder="{{obj.name}}" disabled>
+                </div>
+
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-600 text-sm font-medium mb-2">Category Image</label>
+                    <img class="w-40" src="{{obj.image.url}}" alt="">
+                </div>
+                {% for prod in obj.products.all %}
+                {% if forloop.first %}
+
+                <div class="mb-4">
+                    <label for="discount" class="block text-gray-600 text-sm font-medium mb-2">Discount (%)</label>
+                    <input type="number" id="discount" name="discount" value="{{prod.discount}}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" required>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Submit</button>
+                </div>
+            </form>
+        </div>
+        {% elif obj2 %}
+        <div class="max-w-md mx-auto bg-white p-8 rounded-md shadow-md">
+            <h2 class="text-2xl font-semibold mb-6">Add Discount</h2>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-600 text-sm font-medium mb-2">Product Name</label>
+                    <input type="text" class="w-full px-3 py-2 border-none rounded-md focus:outline-none focus:border-blue-500" placeholder="{{obj2.name}}" disabled>
+                </div>
+                {% for image in obj2.images.all %}
+                {% if forloop.first %}
+
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-600 text-sm font-medium mb-2">Product Image</label>
+                    <img class="w-40" src="{{image.image.url}}" alt="">
+                </div>
+
+                {% endif %}
+                {% endfor %}
+
+                <div class="mb-4">
+                    <label for="discount" class="block text-gray-600 text-sm font-medium mb-2">Discount (%)</label>
+                    <input type="number" id="discount" name="discount" placeholder="{{obj2.discount}}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" required>
+                </div>
+
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Submit</button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+</body>
+</html>

@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body id = 'container_box'>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="49%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:15px;">AudSculpt</td>
+          </tr>
+          <tr>
+            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;">Invoice Number: #800000{{order.id}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:15px;">Service Provider </td>
+          </tr>
+          <tr>
+            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:400; font-size:14px;">Indian Traders</td>
+          </tr>
+
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          </table></td>
+      </tr>
+    </table></td>
+    <td width="51%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><img src="logo.png" alt="" width="150"  /></td>
+      </tr>
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="right"></td>
+      </tr>
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;"  align="right">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;"  align="right">Order Date :{{order.date}}</td>
+      </tr>
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:15px;" align="right">{{order.user.first_name}} {{order.user.last_name}}</td>
+      </tr>
+      
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="right">{{order.address.houseno}} , {{order.address.street}}</td>
+      </tr>
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="right">{{order.address.city}}</td>
+      </tr>
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="right">{{order.address.landmark}},{{order.address.pincode}}</td>
+      </tr>
+
+    </table>
+  </td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; background-color: gray; color:white; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;"  height="32" align="center">PRODUCT</td>
+        
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px;background-color: gray; color:white; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-right:1px solid #333;" align="center">BRAND</td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px;background-color: gray; color:white; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-right:1px solid #333;" align="center">QUANTITY</td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px;background-color: gray; color:white; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-right:1px solid #333;" align="center">PAYMENT</td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px;background-color: gray; color:white; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-right:1px solid #333;" align="center">COLOR</td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px;background-color: gray; color:white; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-right:1px solid #333;"  align="center">AMOUNT</td>
+      </tr>
+      {% for each in order.product.all %}
+      <tr>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{each.name}}</td>
+        
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{brand}}</td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{order.quantity}}</td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{order.payment}}</td>
+        {% for i in each.varients.all %}
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-right:1px solid #333;" align="center"><p style="width:10px ; height:10px ; background: {{i.variation}}; color:{{i.variation}}">color</p></td>
+        <td style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-right:1px solid #333;" align="center">₹ {{i.price}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="5" style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">TOTAL</td>
+        <td  style="font-family:Verdana, Geneva, sans-serif;padding:5px; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">₹ {{order.price}}</td>
+
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr> 
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:13px;" colspan="2">Please Note:</td>
+  </tr>
+  <tr>
+    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" colspan="2">wanrenty card is added to the product.</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:13px;" colspan="2">Thank you for using our service</td>
+  </tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" colspan="2" align="center">(This is computer generated receipt and does not require physical signature.) </td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+</table>
+
+
+</body>
+</html>

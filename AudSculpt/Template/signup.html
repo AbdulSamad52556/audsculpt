@@ -1,0 +1,107 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <style>
+        body{
+            background-color: #0e1233;
+           
+            
+        }
+        .container{
+            display: flex;
+            text-align: center;
+        }
+        
+       
+        .login-form{
+            background-color: #ffffff;
+            border-radius: 22px;
+        }
+        .msg {
+            text-align: center;
+            
+        }
+              
+        .form input{
+            border-radius: 12px;
+            color: #0e1233;
+            border: none;
+        }
+       
+        .form .log-btn{
+            background-color: #0e1233;
+            color: #ffffff;
+            border-radius: 12px;
+            border: none;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .login-form input{
+            background-color: rgba(0, 0, 0, 0.158);
+        }
+       
+        
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .btn-google{
+            border-radius: 12px;
+            border: 1px solid;
+        }
+    </style>
+    
+</head>
+{% tailwind_css %}
+
+<body>
+
+    <div class="">
+        <div class="grid-cols-2 lg:flex justify-around p-10 gap-20">
+            <div class="lg:w-2/4" style="background-color: #15193d;color: #ffffff34;border-radius: 22px;">
+                <div class="flex flex-col p-10 justify-center items-center ">
+                    <h1 class="text-5xl">Looks like you are new here!</h1>
+                    <h3 class="text-xl">signup with your details</h3>
+                </div>
+            </div>
+            <div class="login-form mt-10 lg:m-0 lg:w-2/4">
+                <div class="form flex flex-col w-full">
+                    <form method="post" class="flex flex-col justify-center items-center p-10 gap-5" >
+                        {%csrf_token%}
+                        <input class="w-3/4 h-14" type="text" placeholder="Firstname" name="firstname" required>
+                        <input class="w-3/4 h-14" type="text" placeholder="Lastname" name="lastname" required>
+                        <input class="w-3/4 h-14" type="text" placeholder="Username" name="username" required>
+                        {% if user_err %}
+                            <p class="text-red-600">{{user_err}}</p>
+                        {% endif %}
+                        <input class="w-3/4 h-14" type="Email" placeholder="Email" name="email" required>
+                        <input class='w-3/4 h-14' type="password" placeholder="password" name="password1" required>
+                        <input class='w-3/4 h-14' type="password" placeholder="Confirm password" name="password2" required>
+                        {% if pass_err %}
+                            <p>{{pass_err}}</p>
+                        {% endif %}
+                        <button class="log-btn w-3/4 h-14">Create Account</button>
+                        <p>OR</p>
+                        <button type="submit" class="btn-google w-3/4 h-14">Google</button>
+
+                    </form>
+                    
+                </div>
+                <div >
+                    <p class="text-center">Already have Account <a href="/">LogIn</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</body>
+</html>
