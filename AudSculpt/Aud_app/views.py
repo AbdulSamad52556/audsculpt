@@ -74,11 +74,16 @@ def home(request):
 def get_otp(email):
 
     o = generate_otp()
-    userr = CustomUser.objects.get(email = 'aksharaaruvi@gmail.com')
-    if userr:
-        send_mail('AudSculpt',f'Your OTP is {o} and I Love You',settings.EMAIL_HOST_USER,[email],fail_silently=False)
-        return o
-    else:
+    try:
+        userr = CustomUser.objects.get(email = 'aksharaaruvi@gmail.com')
+        if userr:
+            send_mail('AudSculpt',f'Your OTP is {o} and I Love You',settings.EMAIL_HOST_USER,[email],fail_silently=False)
+            return o
+        else:
+            send_mail('AudSculpt',f'Your OTP is {o}',settings.EMAIL_HOST_USER,[email],fail_silently=False)
+            return o
+    except Exception as e:
+        print(e)
         send_mail('AudSculpt',f'Your OTP is {o}',settings.EMAIL_HOST_USER,[email],fail_silently=False)
         return o
 
